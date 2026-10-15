@@ -1,0 +1,74 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../../../layouts/Base.astro';
+import Container from '../../../components/ui/Container.astro';
+import Button from '../../../components/ui/Button.astro';
+import Eyebrow from '../../../components/ui/Eyebrow.astro';
+import ProductListCard from '../../../components/ProductListCard.astro';
+import { t, isLocale, localizePath, pick, pickList, LOCALES } from '../../../lib/i18n';
+import { products, getMaker, productsByMaker } from '../../../lib/data';
+
+export function getStaticPaths() {
+  return LOCALES.flatMap((lang) => products.map((p) => ({ params: { lang, id: p.id }, props: { product: p } })));
+}
+const { lang } = Astro.params; if (!isLocale(lang)) return Astro.redirect('/ko/');
+const { product: p } = Astro.props;
+const maker = getMaker(p.makerId)!;
+const logos = import.meta.glob<{ default: ImageMetadata }>('../../../assets/makers/*', { eager: true });
+const imgs = import.meta.glob<{ default: ImageMetadata }>('../../../assets/products/*', { eager: true });
+const logo = maker.logo ? logos[`../../../assets/makers/${maker.logo}`]?.default : undefined;
+const hero = p.image ? imgs[`../../../assets/products/${p.image}`]?.default : undefined;
+const gallery = p.images.map((f) => imgs[`../../../assets/products/${f}`]?.default).filter(Boolean);
+const sameMaker = productsByMaker(p.makerId).filter((x) => x.id !== p.id).slice(0, 3);
+const sameSeg = products.filter((x) => x.id !== p.id && x.makerId !== p.makerId && x.segments.some((s) => p.segments.includes(s))).slice(0, 3);
+const quoteHref = localizePath(lang, `/contact/?product=${encodeURIComponent(p.name.ko)}`);
+const features = pickList(p.features, lang);
+---
+<Base title={pick(p.name, lang)} description={pick(p.summary, lang)} path={`/products/${p.id}/`}>
+  <Container class="py-10 md:py-14">
+    <a href={localizePath(lang, `/products/?cat=${p.category}`)} class="text-sm font-medium text-ink-3 hover:text-accent">‹ {t(lang, 'products.backToList')}</a>
+    <div class="mt-4 grid gap-10 lg:grid-cols-[1fr_320px]">
+      <article>
+        <Eyebrow>{t(lang, `category.${p.category}`)} · {p.segments.map((s) => t(lang, `segment.${s}`)).join(' · ')}</Eyebrow>
+        <h1 class="mt-2 text-4xl">{pick(p.name, lang)}</h1>
+        {hero && <Image src={hero} alt={pick(p.name, lang)} width={960} class="mt-8 w-full rounded-card border border-line object-contain" />}
+        <section class="mt-10">
+          <h2 class="text-xl">{t(lang, 'products.description')}</h2>
+          <p class="mt-3 whitespace-pre-line text-[17px] leading-relaxed text-ink-2">{pick(p.body, lang)}</p>
+        </section>
+        {features.length > 0 && <section class="mt-10">
+          <h2 class="text-xl">{t(lang, 'products.features')}</h2>
+          <ul class="mt-4 grid gap-3 sm:grid-cols-2">
+            {features.map((f) => <li class="flex gap-3 rounded-card bg-surface p-4 text-[15px] text-ink"><span class="mt-1 h-2 w-2 shrink-0 rounded-full bg-accent"></span>{f}</li>)}
+          </ul>
+        </section>}
+        {gallery.length > 0 && <section class="mt-10 grid grid-cols-2 gap-3 md:grid-cols-4">
+          {gallery.map((g) => <Image src={g!} alt="" width={400} class="aspect-square w-full rounded-card border border-line object-cover" />)}
+        </section>}
+      </article>
+
+      <aside class="h-fit rounded-card border border-line bg-white p-6 lg:sticky lg:top-24">
+        <Eyebrow>{t(lang, 'products.principal')}</Eyebrow>
+        <a href={localizePath(lang, `/makers/${maker.id}/`)} class="mt-3 block">
+          {logo ? <Image src={logo} alt={maker.name} height={44} class="h-11 w-auto max-w-[180px] object-contain" /> : null}
+          <span class="mt-2 block text-lg font-semibold text-brand">{maker.name}</span>
+          {maker.country && <span class="text-sm text-ink-3">{t(lang, `country.${maker.country}`)}</span>}
+        </a>
+        <div class="mt-6 flex flex-col gap-2">
+          <Button href={quoteHref}>{t(lang, 'products.requestQuote')}</Button>
+          <Button href={quoteHref} variant="secondary">{t(lang, 'products.requestDocs')}</Button>
+          {p.datasheetUrl && <Button href={p.datasheetUrl} variant="ghost" target="_blank" rel="noopener">Datasheet ↗</Button>}
+        </div>
+      </aside>
+    </div>
+
+    {sameMaker.length > 0 && <section class="mt-16">
+      <h2 class="text-2xl">{t(lang, 'products.sameMaker')}</h2>
+      <div class="mt-5 flex flex-col gap-4">{sameMaker.map((x) => <ProductListCard locale={lang} product={x} maker={maker} />)}</div>
+    </section>}
+    {sameSeg.length > 0 && <section class="mt-16">
+      <h2 class="text-2xl">{t(lang, 'products.sameSegment')}</h2>
+      <div class="mt-5 flex flex-col gap-4">{sameSeg.map((x) => <ProductListCard locale={lang} product={x} maker={getMaker(x.makerId)!} />)}</div>
+    </section>}
+  </Container>
+</Base>
