@@ -12,5 +12,6 @@ const variants = {
   ghost: 'text-accent hover:bg-tint-special',
 };
 const className = `${base} ${sizes[size]} ${variants[variant]} ${cls}`;
+const press = variant === 'ghost' ? {} : { 'data-press': '' };
 ---
-{href ? <a href={href} class={className} {...rest}><slot /></a> : <button type={type} class={className} {...rest}><slot /></button>}
+{href ? <a href={href} class={className} {...press} {...rest}><slot /></a> : <button type={type} class={className} {...press} {...rest}><slot /></button>}

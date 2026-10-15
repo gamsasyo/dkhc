@@ -9,7 +9,7 @@ const art: Record<Category, string> = {
   eco: 'from-[#c2e08a] via-[#e9f4d2] to-[#f7fbef]',
 };
 ---
-<div class="grid grid-cols-1 gap-3 sm:grid-cols-3" data-category-tiles>
+<div class="grid grid-cols-1 gap-3 sm:grid-cols-3" data-category-tiles data-reveal-group>
   {CATEGORIES.map((c) => {
     const Tag = hrefFor ? 'a' : 'button';
     return <Tag {...(hrefFor ? { href: hrefFor(c) } : { type: 'button' })} data-category={c} aria-pressed={active === c}

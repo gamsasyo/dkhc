@@ -11,7 +11,7 @@ const items = Array.from({ length: CLIENT_LOGO_COUNT }, (_, i) => {
   return { src: logos[`../assets/clients/partner${n}.gif`]?.default, name: names[i] ?? `partner${n}` };
 }).filter((x) => x.src);
 ---
-<ul class={`grid grid-cols-3 gap-3 md:grid-cols-6 ${cls}`} data-client-logos>
+<ul class={`grid grid-cols-3 gap-3 md:grid-cols-6 ${cls}`} data-client-logos data-reveal-group>
   {items.map((it) => (
     <li class="grid h-20 place-items-center rounded-card border border-line bg-white px-4" title={it.name}>
       <Image src={it.src!} alt={it.name} loading="eager"

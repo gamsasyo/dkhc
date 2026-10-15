@@ -33,12 +33,12 @@ const section = 'py-section-sm md:py-section';
 
   <section id="overview" class={section}>
     <Container class="grid gap-10 md:grid-cols-[1fr_1.2fr] md:gap-16">
-      <div>
+      <div data-reveal>
         <Eyebrow>{t(lang, 'company.eyebrow')}</Eyebrow>
         <h2 class="mt-2 text-3xl">{t(lang, 'company.overview')}</h2>
         <p class="mt-6 text-[17px] leading-relaxed text-ink-2">{c.overview}</p>
       </div>
-      <dl class="self-start divide-y divide-line rounded-card border border-line bg-surface/60 px-6">
+      <dl class="self-start divide-y divide-line rounded-card border border-line bg-surface/60 px-6" data-reveal>
         {facts.map(([k, v]) => (
           <div class="grid gap-1 py-4 sm:grid-cols-[7rem_1fr] sm:gap-4">
             <dt class="text-sm font-semibold text-ink-3">{k}</dt>
@@ -50,7 +50,7 @@ const section = 'py-section-sm md:py-section';
   </section>
 
   <section id="greeting" class={`${section} bg-surface`}>
-    <Container class="max-w-3xl">
+    <Container class="max-w-3xl" data-reveal>
       <Eyebrow>{t(lang, 'company.eyebrow')}</Eyebrow>
       <h2 class="mt-2 text-3xl">{t(lang, 'company.greeting')}</h2>
       <p class="mt-8 text-xl font-semibold text-brand md:text-2xl">{c.greeting.title}</p>
@@ -63,11 +63,11 @@ const section = 'py-section-sm md:py-section';
 
   <section id="history" class={section}>
     <Container class="grid gap-10 md:grid-cols-[1fr_2fr] md:gap-16">
-      <div>
+      <div data-reveal>
         <Eyebrow>{t(lang, 'company.eyebrow')}</Eyebrow>
         <h2 class="mt-2 text-3xl">{t(lang, 'company.history')}</h2>
       </div>
-      <ol class="relative border-l border-line">
+      <ol class="relative border-l border-line" data-reveal>
         {history.map((h) => (
           <li class="relative grid gap-1 pb-8 pl-8 last:pb-0 sm:grid-cols-[5rem_1fr] sm:gap-6">
             <span class="absolute -left-[5px] top-2 h-[9px] w-[9px] rounded-full bg-accent"></span>
@@ -81,19 +81,21 @@ const section = 'py-section-sm md:py-section';
 
   <section id="clients" class={`${section} bg-surface`}>
     <Container>
-      <Eyebrow>{t(lang, 'company.eyebrow')}</Eyebrow>
-      <h2 class="mt-2 text-3xl">{t(lang, 'company.clients')}</h2>
+      <div data-reveal>
+        <Eyebrow>{t(lang, 'company.eyebrow')}</Eyebrow>
+        <h2 class="mt-2 text-3xl">{t(lang, 'company.clients')}</h2>
+      </div>
       <ClientLogos locale={lang} class="mt-8" />
     </Container>
   </section>
 
   <section id="location" class={section}>
     <Container class="grid gap-8 md:grid-cols-[1fr_2fr] md:gap-16">
-      <div>
+      <div data-reveal>
         <Eyebrow>{t(lang, 'company.eyebrow')}</Eyebrow>
         <h2 class="mt-2 text-3xl">{t(lang, 'company.location')}</h2>
       </div>
-      <div class="rounded-card border border-line p-6 md:p-8">
+      <div class="rounded-card border border-line p-6 md:p-8" data-reveal>
         <p class="text-lg font-semibold text-brand">{address}</p>
         <p class="mt-2 text-[15px] text-ink-2">Tel {t(lang, 'footer.tel')} · Fax {t(lang, 'footer.fax')}</p>
         <p class="text-[15px] text-ink-2"><a class="text-accent hover:underline" href={`mailto:${t(lang, 'footer.email')}`}>{t(lang, 'footer.email')}</a></p>
