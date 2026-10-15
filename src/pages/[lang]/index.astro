@@ -1,14 +1,14 @@
 ---
-import '../../styles/global.css';
-export function getStaticPaths() {
-  return ['ko', 'en', 'ja'].map((lang) => ({ params: { lang } }));
-}
-const { lang } = Astro.params;
+import Base from '../../layouts/Base.astro';
+import Container from '../../components/ui/Container.astro';
+import Button from '../../components/ui/Button.astro';
+import { t, localizePath, isLocale } from '../../lib/i18n';
+export const getStaticPaths = () => ['ko', 'en', 'ja'].map((lang) => ({ params: { lang } }));
+const { lang } = Astro.params; if (!isLocale(lang)) return Astro.redirect('/ko/');
 ---
-<html lang={lang}>
-  <head><meta charset="utf-8" /><title>DKHC</title></head>
-  <body class="p-8">
-    <h1 class="text-3xl">(주)대경하이켐 — {lang}</h1>
-    <a class="text-accent underline" href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/${lang}/products/`}>products</a>
-  </body>
-</html>
+<Base title={t(lang, 'site.name')} path="/">
+  <Container class="py-section-sm">
+    <h1 class="text-4xl">{t(lang, 'site.tagline')}</h1>
+    <Button class="mt-8" href={localizePath(lang, '/products/')}>{t(lang, 'nav.products')}</Button>
+  </Container>
+</Base>

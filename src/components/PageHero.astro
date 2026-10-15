@@ -1,0 +1,14 @@
+---
+import Container from './ui/Container.astro';
+import Eyebrow from './ui/Eyebrow.astro';
+type Props = { eyebrow: string; title: string; tint?: 'special' | 'medical' | 'eco' | 'neutral' };
+const { eyebrow, title, tint = 'neutral' } = Astro.props;
+const bg = { special: 'from-tint-special', medical: 'from-tint-medical', eco: 'from-tint-eco', neutral: 'from-surface' }[tint];
+---
+<section class={`relative overflow-hidden bg-gradient-to-r ${bg} to-white`} data-hero-tint={tint}>
+  <div class="pointer-events-none absolute -right-24 -top-32 h-96 w-96 rounded-full bg-white/60 blur-3xl"></div>
+  <Container class="relative py-14 md:py-20">
+    <Eyebrow>{eyebrow}</Eyebrow>
+    <h1 class="mt-2 text-4xl md:text-5xl">{title}</h1>
+  </Container>
+</section>

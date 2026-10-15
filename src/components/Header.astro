@@ -1,0 +1,53 @@
+---
+import Container from './ui/Container.astro';
+import Button from './ui/Button.astro';
+import SearchCombo from './SearchCombo.astro';
+import { t, localizePath, LOCALES, type Locale } from '../lib/i18n';
+type Props = { locale: Locale; path: string };
+const { locale, path } = Astro.props;
+const nav = [
+  { key: 'nav.products', href: '/products/' },
+  { key: 'nav.makers', href: '/makers/' },
+  { key: 'nav.company', href: '/company/' },
+];
+const isActive = (href: string) => path.startsWith(href);
+const LABEL: Record<Locale, string> = { ko: 'KO', en: 'EN', ja: 'JA' };
+---
+<header class="sticky top-0 z-40 border-b border-line bg-white/90 backdrop-blur">
+  <Container class="flex h-[72px] items-center gap-4">
+    <a href={localizePath(locale, '/')} class="shrink-0 text-lg font-bold tracking-tight text-brand">DAEKYUNG HICHEM</a>
+    <SearchCombo locale={locale} class="hidden flex-1 md:flex md:max-w-xl" />
+    <nav class="ml-auto hidden items-center gap-6 md:flex" aria-label="main">
+      {nav.map((n) => <a href={localizePath(locale, n.href)}
+        class={`text-[15px] font-medium ${isActive(n.href) ? 'text-accent' : 'text-ink-2 hover:text-accent'}`}>{t(locale, n.key)}</a>)}
+    </nav>
+    <div class="hidden items-center gap-1 text-xs font-semibold text-ink-3 md:flex" aria-label="language">
+      {LOCALES.map((l, i) => <>{i > 0 && <span>/</span>}<a href={localizePath(l, path)} class={l === locale ? 'text-brand' : 'hover:text-accent'} hreflang={l}>{LABEL[l]}</a></>)}
+    </div>
+    <Button href={localizePath(locale, '/contact/')} size="sm" class="hidden md:inline-flex">{t(locale, 'nav.contact')}</Button>
+    <button type="button" class="ml-auto grid h-10 w-10 place-items-center rounded-pill md:hidden" aria-label="menu" data-menu-toggle aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+  </Container>
+  <div class="hidden border-t border-line bg-white md:hidden" data-menu>
+    <Container class="space-y-4 py-4">
+      <SearchCombo locale={locale} />
+      <nav class="flex flex-col gap-3">
+        {nav.map((n) => <a href={localizePath(locale, n.href)} class="text-base font-medium text-ink">{t(locale, n.key)}</a>)}
+        <a href={localizePath(locale, '/contact/')} class="text-base font-medium text-accent">{t(locale, 'nav.contact')}</a>
+      </nav>
+      <div class="flex gap-3 text-sm font-semibold text-ink-3">
+        {LOCALES.map((l) => <a href={localizePath(l, path)} class={l === locale ? 'text-brand' : ''}>{LABEL[l]}</a>)}
+      </div>
+    </Container>
+  </div>
+</header>
+<script>
+  document.querySelectorAll<HTMLButtonElement>('[data-menu-toggle]').forEach((btn) => {
+    const panel = btn.closest('header')!.querySelector<HTMLElement>('[data-menu]')!;
+    btn.addEventListener('click', () => {
+      const open = panel.classList.toggle('hidden') === false;
+      btn.setAttribute('aria-expanded', String(open));
+    });
+  });
+</script>

@@ -1,20 +1,13 @@
 ---
-import '../../styles/global.css';
+import Base from '../../layouts/Base.astro';
 import Button from '../../components/ui/Button.astro';
 import Pill from '../../components/ui/Pill.astro';
 import Eyebrow from '../../components/ui/Eyebrow.astro';
 import Container from '../../components/ui/Container.astro';
 export const getStaticPaths = () => ['ko', 'en', 'ja'].map((lang) => ({ params: { lang } }));
-const { lang } = Astro.params;
 ---
-<html lang={lang}>
-<head>
-  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Styleguide</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
-</head>
-<body class="py-16">
-  <Container class="space-y-12">
+<Base title="Styleguide" path="/styleguide/">
+  <Container class="space-y-12 py-16">
     <section><Eyebrow>Typography</Eyebrow>
       <h1 class="text-5xl mt-2">세계가 나아가는 길, 그 속에</h1>
       <h2 class="text-3xl mt-4">Special Material</h2>
@@ -38,5 +31,4 @@ const { lang } = Astro.params;
       </div>
     </section>
   </Container>
-</body>
-</html>
+</Base>

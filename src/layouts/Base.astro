@@ -1,0 +1,33 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { isLocale, localizePath, otherLocales, t, type Locale } from '../lib/i18n';
+type Props = { title: string; description?: string; path: string /* 로케일 제외 경로, 예 '/products/' */ };
+const { title, description = '', path } = Astro.props;
+const lang = Astro.params.lang;
+if (!isLocale(lang)) throw new Error(`unknown locale ${lang}`);
+const locale: Locale = lang;
+const canonical = new URL(localizePath(locale, path), Astro.site);
+---
+<!doctype html>
+<html lang={locale}>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title} | {t(locale, 'site.name')}</title>
+  {description && <meta name="description" content={description} />}
+  <link rel="canonical" href={canonical} />
+  {[locale, ...otherLocales(locale)].map((l) => <link rel="alternate" hreflang={l} href={new URL(localizePath(l, path), Astro.site)} />)}
+  <meta property="og:title" content={title} />
+  <meta property="og:site_name" content={t(locale, 'site.name')} />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+  {locale === 'ja' && <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" />}
+</head>
+<body class="min-h-dvh flex flex-col">
+  <Header locale={locale} path={path} />
+  <main class="flex-1"><slot /></main>
+  <Footer locale={locale} />
+</body>
+</html>
