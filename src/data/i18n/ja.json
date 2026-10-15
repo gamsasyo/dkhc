@@ -27,6 +27,8 @@
   "contact.form.country.other": "その他", "contact.form.subject": "件名", "contact.form.message": "お問い合わせ内容", "contact.form.privacy": "個人情報保護方針に同意します。", "contact.form.submit": "メールで送信",
   "contact.form.note": "送信を押すとメールアプリが開き、内容が入力された状態になります。", "contact.quotePrefix": "[見積依頼] ",
   "privacy.note": "本ページは要約です。正文は韓国語版であり、相違がある場合は韓国語版が優先します。",
+  "home.since": "SINCE 1990", "home.viewProducts": "製品を見る", "home.stats.founded": "設立", "home.stats.makers": "サプライヤー", "home.stats.products": "取扱製品", "home.stats.languages": "KR・JP・EN 対応",
+  "home.featured": "主要製品", "home.viewAll": "すべて見る", "home.clients": "主要取引先", "home.cta.title": "お探しの素材が見つかりませんか？", "home.cta.body": "グローバルメーカーのネットワークで必要な素材をお探しします。製品名や用途をお知らせください。",
   "footer.address": "ソウル特別市永登浦区楊坪路12ギル17-1 大京ビル3F", "footer.tel": "+82-2-3272-9581~5", "footer.fax": "+82-2-3272-9586",
   "footer.email": "info@dkhc.co.kr", "footer.privacy": "個人情報保護方針", "footer.copyright": "© 2026 Daekyung Hichem Co., Ltd. All rights reserved."
 }

@@ -27,6 +27,8 @@
   "contact.form.country.other": "Other", "contact.form.subject": "Subject", "contact.form.message": "Message", "contact.form.privacy": "I agree to the privacy policy.", "contact.form.submit": "Send by email",
   "contact.form.note": "Submitting opens your email app with the message prefilled.", "contact.quotePrefix": "[Quote] ",
   "privacy.note": "This is a summary. The Korean version is the authoritative text and prevails in case of any discrepancy.",
+  "home.since": "SINCE 1990", "home.viewProducts": "Browse products", "home.stats.founded": "Founded", "home.stats.makers": "Suppliers", "home.stats.products": "Products", "home.stats.languages": "KR · JP · EN support",
+  "home.featured": "Featured products", "home.viewAll": "View all", "home.clients": "Our clients", "home.cta.title": "Can't find the material you need?", "home.cta.body": "We source it through our global maker network. Just tell us the product name or application.",
   "footer.address": "3F Daekyung Bldg, 17-1 Yangpyeong-ro 12-gil, Yeongdeungpo-gu, Seoul, Korea", "footer.tel": "+82-2-3272-9581~5", "footer.fax": "+82-2-3272-9586",
   "footer.email": "info@dkhc.co.kr", "footer.privacy": "Privacy Policy", "footer.copyright": "© 2026 Daekyung Hichem Co., Ltd. All rights reserved."
 }
