@@ -1,0 +1,25 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Container from '../../../components/ui/Container.astro';
+import PageHero from '../../../components/PageHero.astro';
+import { t, isLocale } from '../../../lib/i18n';
+import ko from '../../../content/privacy/ko.json';
+import en from '../../../content/privacy/en.json';
+import ja from '../../../content/privacy/ja.json';
+export const getStaticPaths = () => ['ko', 'en', 'ja'].map((lang) => ({ params: { lang } }));
+const { lang } = Astro.params; if (!isLocale(lang)) return Astro.redirect('/ko/');
+const policy = { ko, en, ja }[lang];
+---
+<Base title={t(lang, 'footer.privacy')} path="/privacy/">
+  <PageHero eyebrow="PRIVACY" title={t(lang, 'footer.privacy')} />
+  <Container class="max-w-3xl py-section-sm md:py-section">
+    {lang !== 'ko' && <p class="mb-8 rounded-card bg-surface px-5 py-4 text-sm text-ink-2">{t(lang, 'privacy.note')}</p>}
+    <div class="space-y-3 text-[15px] leading-relaxed text-ink-2">{policy.intro.map((p) => <p>{p}</p>)}</div>
+    {policy.sections.map((s) => (
+      <section class="mt-10">
+        <h2 class="text-xl">{s.title}</h2>
+        <div class="mt-3 space-y-2 text-[15px] leading-relaxed text-ink-2">{s.body.map((p) => <p>{p}</p>)}</div>
+      </section>
+    ))}
+  </Container>
+</Base>

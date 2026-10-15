@@ -23,6 +23,11 @@
   "company.name": "회사명", "company.founded": "설립", "company.founded.value": "1990년 7월 (2010년 법인 전환)", "company.ceo": "대표이사", "company.ceo.value": "이병길",
   "company.address": "주소", "company.business": "사업내용", "company.business.value": "특수 엔지니어링 수지, 필름, 테이프, 화학제품, 장비 등의 수입 및 수출",
   "company.map.naver": "네이버지도", "company.map.kakao": "카카오맵", "company.map.google": "Google 지도",
+  "contact.eyebrow": "CONTACT", "contact.lead": "제품·견적·협력 문의를 남겨 주세요. 담당자가 확인 후 연락드립니다.", "contact.info": "연락처", "contact.hours": "업무시간", "contact.hours.value": "평일 09:00–18:00 (주말·공휴일 휴무)",
+  "contact.form.title": "문의 양식", "contact.form.name": "이름", "contact.form.email": "이메일", "contact.form.company": "회사명", "contact.form.phone": "연락처", "contact.form.country": "국가",
+  "contact.form.country.other": "기타", "contact.form.subject": "제목", "contact.form.message": "문의 내용", "contact.form.privacy": "개인정보 취급방침에 동의합니다.", "contact.form.submit": "메일로 보내기",
+  "contact.form.note": "보내기를 누르면 기본 메일 앱이 열리고 내용이 채워집니다.", "contact.quotePrefix": "[견적 문의] ",
+  "privacy.note": "본 방침의 원문은 한국어판이며, 다른 언어판과 차이가 있을 경우 한국어판이 우선합니다.",
   "footer.address": "서울특별시 영등포구 양평로12길 17-1 대경빌딩 3층", "footer.tel": "02-3272-9581~5", "footer.fax": "02-3272-9586",
   "footer.email": "info@dkhc.co.kr", "footer.privacy": "개인정보 취급방침", "footer.copyright": "© 2026 Daekyung Hichem Co., Ltd. All rights reserved."
 }

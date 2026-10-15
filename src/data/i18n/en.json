@@ -22,6 +22,11 @@
   "company.name": "Company", "company.founded": "Founded", "company.founded.value": "July 1990 (incorporated 2010)", "company.ceo": "CEO", "company.ceo.value": "Byung Kil Lee",
   "company.address": "Address", "company.business": "Business", "company.business.value": "Import and export of special engineering resins, films, tapes, chemicals and equipment",
   "company.map.naver": "Naver Map", "company.map.kakao": "Kakao Map", "company.map.google": "Google Maps",
+  "contact.eyebrow": "CONTACT", "contact.lead": "Send us a product, quote or partnership inquiry. We will get back to you shortly.", "contact.info": "Contact details", "contact.hours": "Business hours", "contact.hours.value": "Mon–Fri 09:00–18:00 KST (closed weekends and holidays)",
+  "contact.form.title": "Inquiry form", "contact.form.name": "Name", "contact.form.email": "Email", "contact.form.company": "Company", "contact.form.phone": "Phone", "contact.form.country": "Country",
+  "contact.form.country.other": "Other", "contact.form.subject": "Subject", "contact.form.message": "Message", "contact.form.privacy": "I agree to the privacy policy.", "contact.form.submit": "Send by email",
+  "contact.form.note": "Submitting opens your email app with the message prefilled.", "contact.quotePrefix": "[Quote] ",
+  "privacy.note": "This is a summary. The Korean version is the authoritative text and prevails in case of any discrepancy.",
   "footer.address": "3F Daekyung Bldg, 17-1 Yangpyeong-ro 12-gil, Yeongdeungpo-gu, Seoul, Korea", "footer.tel": "+82-2-3272-9581~5", "footer.fax": "+82-2-3272-9586",
   "footer.email": "info@dkhc.co.kr", "footer.privacy": "Privacy Policy", "footer.copyright": "© 2026 Daekyung Hichem Co., Ltd. All rights reserved."
 }

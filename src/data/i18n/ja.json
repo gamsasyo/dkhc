@@ -22,6 +22,11 @@
   "company.name": "会社名", "company.founded": "設立", "company.founded.value": "1990年7月（2010年法人転換）", "company.ceo": "代表理事", "company.ceo.value": "李丙吉",
   "company.address": "住所", "company.business": "事業内容", "company.business.value": "特殊エンジニアリング樹脂、フィルム、テープ、化学製品、装備などの輸入および輸出",
   "company.map.naver": "NAVERマップ", "company.map.kakao": "カカオマップ", "company.map.google": "Googleマップ",
+  "contact.eyebrow": "CONTACT", "contact.lead": "製品・見積・協業に関するお問い合わせをお寄せください。担当者より折り返しご連絡いたします。", "contact.info": "連絡先", "contact.hours": "営業時間", "contact.hours.value": "平日 09:00–18:00（韓国時間・土日祝休）",
+  "contact.form.title": "お問い合わせフォーム", "contact.form.name": "お名前", "contact.form.email": "メールアドレス", "contact.form.company": "会社名", "contact.form.phone": "電話番号", "contact.form.country": "国",
+  "contact.form.country.other": "その他", "contact.form.subject": "件名", "contact.form.message": "お問い合わせ内容", "contact.form.privacy": "個人情報保護方針に同意します。", "contact.form.submit": "メールで送信",
+  "contact.form.note": "送信を押すとメールアプリが開き、内容が入力された状態になります。", "contact.quotePrefix": "[見積依頼] ",
+  "privacy.note": "本ページは要約です。正文は韓国語版であり、相違がある場合は韓国語版が優先します。",
   "footer.address": "ソウル特別市永登浦区楊坪路12ギル17-1 大京ビル3F", "footer.tel": "+82-2-3272-9581~5", "footer.fax": "+82-2-3272-9586",
   "footer.email": "info@dkhc.co.kr", "footer.privacy": "個人情報保護方針", "footer.copyright": "© 2026 Daekyung Hichem Co., Ltd. All rights reserved."
 }

@@ -1,0 +1,13 @@
+{
+  "intro": ["Daekyung Hichem Co., Ltd. (the \"Company\") values your personal information and complies with the Act on Promotion of Information and Communications Network Utilization and Information Protection. Any revision of this policy will be announced on the website.", "This policy has been in effect since 2018."],
+  "sections": [
+    { "title": "Information we collect", "body": ["Name, contact details (phone, email, address), company name and access logs, collected through the website inquiry form or by request."] },
+    { "title": "Purpose of use", "body": ["To respond to inquiries, fulfil service and supply contracts, and verify identity where required."] },
+    { "title": "Retention", "body": ["Personal information is destroyed without delay once its purpose is fulfilled, except where retention is required by law (e.g. records on contracts, payments and supply: 5 years; consumer complaints: 3 years; records of misuse: 1 year)."] },
+    { "title": "Destruction", "body": ["Electronic files are deleted using irrecoverable technical methods; printed records are shredded or incinerated."] },
+    { "title": "Disclosure and outsourcing", "body": ["We do not provide personal information to third parties except with prior consent or where necessary for delivery, installation or after-sales service. We do not outsource handling of personal information without notice and consent."] },
+    { "title": "Your rights", "body": ["You may view, correct or request deletion of your personal information at any time by contacting the person in charge of personal information in writing, by phone or by email."] },
+    { "title": "Cookies", "body": ["The website may use cookies to analyse visit frequency and improve service. You can refuse cookies in your browser settings; some functions may then be limited."] },
+    { "title": "Contact", "body": ["Inquiries regarding personal information: info@dkhc.co.kr, +82-2-3272-9581~5."] }
+  ]
+}

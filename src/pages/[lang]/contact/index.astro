@@ -1,0 +1,81 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Container from '../../../components/ui/Container.astro';
+import Eyebrow from '../../../components/ui/Eyebrow.astro';
+import Button from '../../../components/ui/Button.astro';
+import PageHero from '../../../components/PageHero.astro';
+import { t, isLocale, localizePath } from '../../../lib/i18n';
+export const getStaticPaths = () => ['ko', 'en', 'ja'].map((lang) => ({ params: { lang } }));
+const { lang } = Astro.params; if (!isLocale(lang)) return Astro.redirect('/ko/');
+const email = t(lang, 'footer.email');
+const countries = [
+  ['KR', t(lang, 'country.KR')], ['JP', t(lang, 'country.JP')], ['CN', t(lang, 'country.CN')],
+  ['TW', t(lang, 'country.TW')], ['US', t(lang, 'country.US')], ['OTHER', t(lang, 'contact.form.country.other')],
+];
+const field = 'mt-1.5 h-12 w-full rounded-input border border-line bg-white px-4 text-[15px] outline-none focus:border-accent';
+const label = 'block text-sm font-semibold text-ink-2';
+---
+<Base title={t(lang, 'nav.contact')} description={t(lang, 'contact.lead')} path="/contact/">
+  <PageHero eyebrow={t(lang, 'contact.eyebrow')} title={t(lang, 'nav.contact')} tint="medical" />
+  <Container class="py-section-sm md:py-section">
+    <p class="max-w-2xl text-[17px] leading-relaxed text-ink-2">{t(lang, 'contact.lead')}</p>
+    <div class="mt-10 grid gap-8 md:grid-cols-[1fr_1.6fr] md:gap-12">
+
+      <aside class="self-start rounded-card bg-surface p-6 md:p-8">
+        <Eyebrow>{t(lang, 'contact.eyebrow')}</Eyebrow>
+        <h2 class="mt-2 text-2xl">{t(lang, 'contact.info')}</h2>
+        <dl class="mt-6 space-y-5 text-[15px]">
+          <div><dt class="text-xs font-semibold uppercase tracking-[0.08em] text-ink-3">{t(lang, 'company.address')}</dt><dd class="mt-1 text-ink">{t(lang, 'footer.address')}</dd></div>
+          <div><dt class="text-xs font-semibold uppercase tracking-[0.08em] text-ink-3">Tel</dt><dd class="mt-1 text-ink">{t(lang, 'footer.tel')}</dd></div>
+          <div><dt class="text-xs font-semibold uppercase tracking-[0.08em] text-ink-3">Fax</dt><dd class="mt-1 text-ink">{t(lang, 'footer.fax')}</dd></div>
+          <div><dt class="text-xs font-semibold uppercase tracking-[0.08em] text-ink-3">Email</dt><dd class="mt-1"><a class="font-semibold text-accent hover:underline" href={`mailto:${email}`}>{email}</a></dd></div>
+          <div><dt class="text-xs font-semibold uppercase tracking-[0.08em] text-ink-3">{t(lang, 'contact.hours')}</dt><dd class="mt-1 text-ink">{t(lang, 'contact.hours.value')}</dd></div>
+        </dl>
+      </aside>
+
+      <form class="rounded-card border border-line p-6 md:p-8" data-contact-form data-email={email} data-quote-prefix={t(lang, 'contact.quotePrefix')} novalidate>
+        <Eyebrow>{t(lang, 'contact.eyebrow')}</Eyebrow>
+        <h2 class="mt-2 text-2xl">{t(lang, 'contact.form.title')}</h2>
+        <div class="mt-6 grid gap-5 sm:grid-cols-2">
+          <label class={label}>{t(lang, 'contact.form.name')} *<input name="name" required autocomplete="name" class={field} /></label>
+          <label class={label}>{t(lang, 'contact.form.email')} *<input name="email" type="email" required autocomplete="email" class={field} /></label>
+          <label class={label}>{t(lang, 'contact.form.company')}<input name="company" autocomplete="organization" class={field} /></label>
+          <label class={label}>{t(lang, 'contact.form.phone')}<input name="phone" type="tel" autocomplete="tel" class={field} /></label>
+          <label class={label}>{t(lang, 'contact.form.country')}
+            <select name="country" class={field}>{countries.map(([v, l]) => <option value={v} selected={v === (lang === 'ja' ? 'JP' : 'KR')}>{l}</option>)}</select>
+          </label>
+          <label class={`${label} sm:col-span-2`}>{t(lang, 'contact.form.subject')} *<input name="subject" required class={field} /></label>
+          <label class={`${label} sm:col-span-2`}>{t(lang, 'contact.form.message')} *
+            <textarea name="message" required rows="6" class={`${field} h-auto py-3`}></textarea>
+          </label>
+          <label class="flex items-start gap-2 text-sm text-ink-2 sm:col-span-2">
+            <input name="privacy" type="checkbox" required class="mt-1 h-4 w-4 accent-accent" />
+            <span>{t(lang, 'contact.form.privacy')} <a class="text-accent hover:underline" href={localizePath(lang, '/privacy/')}>›</a></span>
+          </label>
+        </div>
+        <div class="mt-6 flex flex-wrap items-center gap-4">
+          <Button type="submit">{t(lang, 'contact.form.submit')}</Button>
+          <span class="text-xs text-ink-3">{t(lang, 'contact.form.note')}</span>
+        </div>
+      </form>
+    </div>
+  </Container>
+</Base>
+<script>
+  // TODO(plan2): POST to Apps Script — 지금은 mailto 로 임시 전송
+  document.querySelectorAll<HTMLFormElement>('[data-contact-form]').forEach((form) => {
+    const product = new URLSearchParams(location.search).get('product');
+    if (product) (form.elements.namedItem('subject') as HTMLInputElement).value = `${form.dataset.quotePrefix}${product}`;
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!form.reportValidity()) return;
+      const v = (n: string) => (form.elements.namedItem(n) as HTMLInputElement | HTMLSelectElement).value.trim();
+      const country = form.elements.namedItem('country') as HTMLSelectElement;
+      const body = [
+        `Name: ${v('name')}`, `Email: ${v('email')}`, `Company: ${v('company')}`, `Phone: ${v('phone')}`,
+        `Country: ${country.selectedOptions[0]?.text ?? ''}`, '', v('message'),
+      ].join('\n');
+      location.href = `mailto:${form.dataset.email}?subject=${encodeURIComponent(v('subject'))}&body=${encodeURIComponent(body)}`;
+    });
+  });
+</script>
