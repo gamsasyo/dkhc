@@ -1,0 +1,16 @@
+---
+import Pill from './ui/Pill.astro';
+import { t, type Locale } from '../lib/i18n';
+import { CATEGORIES, segmentsOf } from '../lib/schema';
+type Props = { locale: Locale; counts: Record<string, Record<string, number>> /* cat → seg → n */ };
+const { locale, counts } = Astro.props;
+---
+<div data-segment-rows>
+  {CATEGORIES.map((c) => (
+    <div data-segments-for={c} class="hidden flex-wrap gap-2 [&:not(.hidden)]:flex">
+      <p class="w-full text-sm font-medium text-ink-2">{t(locale, 'products.selectSegment', { category: t(locale, `category.${c}`) })}</p>
+      <Pill value="" active>{t(locale, 'products.allSegments')}</Pill>
+      {segmentsOf(c).map((s) => <Pill value={s} count={counts[c][s]}>{t(locale, `segment.${s}`)}</Pill>)}
+    </div>
+  ))}
+</div>

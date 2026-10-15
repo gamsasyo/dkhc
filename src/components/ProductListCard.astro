@@ -1,0 +1,32 @@
+---
+import { Image } from 'astro:assets';
+import Button from './ui/Button.astro';
+import Eyebrow from './ui/Eyebrow.astro';
+import { t, localizePath, pick, type Locale } from '../lib/i18n';
+import type { Product, Maker } from '../lib/schema';
+type Props = { locale: Locale; product: Product; maker: Maker };
+const { locale, product: p, maker } = Astro.props;
+const href = localizePath(locale, `/products/${p.id}/`);
+const logos = import.meta.glob<{ default: ImageMetadata }>('../assets/makers/*', { eager: true });
+const logo = maker.logo ? logos[`../assets/makers/${maker.logo}`]?.default : undefined;
+const quoteHref = localizePath(locale, `/contact/?product=${encodeURIComponent(p.name.ko)}`);
+---
+<article class="group relative rounded-card border border-line bg-white p-5 transition-shadow duration-200 hover:shadow-card md:p-6"
+  data-product-card data-id={p.id}>
+  <div class="grid gap-4 md:grid-cols-[1fr_150px]">
+    <div>
+      <Eyebrow>{t(locale, `category.${p.category}`)} · {p.segments.map((s) => t(locale, `segment.${s}`)).join(' · ')}</Eyebrow>
+      <h3 class="mt-1 text-xl"><a href={href} class="after:absolute after:inset-0">{pick(p.name, locale)}</a></h3>
+      <p class="mt-2 line-clamp-2 text-[15px] text-ink-2">{pick(p.summary, locale) || pick(p.body, locale)}</p>
+    </div>
+    <div class="flex flex-row items-center gap-3 border-line md:flex-col md:justify-center md:border-l md:pl-5">
+      {logo ? <Image src={logo} alt={maker.name} height={40} class="h-10 w-auto max-w-[120px] object-contain" /> : <span class="text-sm font-semibold text-brand">{maker.name}</span>}
+      <span class="text-xs text-ink-3">{t(locale, 'products.principal')} · <b class="font-semibold text-ink-2">{maker.name}</b></span>
+    </div>
+  </div>
+  <div class="relative z-10 mt-4 flex flex-wrap gap-2">
+    <Button size="sm" variant="secondary" href={quoteHref}>{t(locale, 'products.requestDocs')}</Button>
+    <Button size="sm" href={quoteHref}>{t(locale, 'products.requestQuote')}</Button>
+    <a href={href} class="ml-auto self-center text-sm font-semibold text-accent">{t(locale, 'products.viewDetail')} ›</a>
+  </div>
+</article>

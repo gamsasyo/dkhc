@@ -1,0 +1,29 @@
+---
+import { t, type Locale } from '../lib/i18n';
+import { CATEGORIES, type Category } from '../lib/schema';
+type Props = { locale: Locale; counts: Record<Category, number>; active?: Category; hrefFor?: (c: Category) => string };
+const { locale, counts, active, hrefFor } = Astro.props;
+const art: Record<Category, string> = {
+  special: 'from-[#9cc7ff] via-[#dbe9ff] to-[#f3f7ff]',
+  medical: 'from-[#8fe0c0] via-[#d7f5ea] to-[#f2fbf7]',
+  eco: 'from-[#c2e08a] via-[#e9f4d2] to-[#f7fbef]',
+};
+---
+<div class="grid grid-cols-1 gap-3 sm:grid-cols-3" data-category-tiles>
+  {CATEGORIES.map((c) => {
+    const Tag = hrefFor ? 'a' : 'button';
+    return <Tag {...(hrefFor ? { href: hrefFor(c) } : { type: 'button' })} data-category={c} aria-pressed={active === c}
+      class={`group relative h-28 overflow-hidden rounded-card border-2 text-left transition-colors duration-200 ${active === c ? 'border-accent' : 'border-transparent hover:border-line'}`}>
+      <div class={`absolute inset-0 bg-gradient-to-br ${art[c]}`}></div>
+      <div class="absolute -right-6 -bottom-10 h-28 w-28 rounded-full bg-white/50 blur-2xl"></div>
+      <div class="relative flex h-full flex-col justify-end p-4">
+        <span class="text-base font-semibold text-brand">{t(locale, `category.${c}`)}</span>
+        <span class="text-xs text-ink-2">{t(locale, `category.${c}.desc`)}</span>
+      </div>
+      <span data-count class="absolute right-3 top-3 rounded-pill bg-white/80 px-2 py-0.5 text-xs font-semibold text-brand">{counts[c]}</span>
+      <span data-check class={`absolute left-3 top-3 grid h-6 w-6 place-items-center rounded-full bg-accent text-white ${active === c ? '' : 'hidden'}`}>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg>
+      </span>
+    </Tag>;
+  })}
+</div>
