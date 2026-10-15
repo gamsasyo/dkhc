@@ -2081,7 +2081,7 @@ jobs:
 - [ ] **Step 2: 리포 생성 + 첫 배포**
 
 ```bash
-gh repo create gamsasyo/dkhc --private --source=. --remote=origin --push
+gh repo create gamsasyo/dkhc --public --source=. --remote=origin --push
 gh secret set SHEET_ID --body "<시트 ID>"
 gh variable set BASE_PATH --body "/dkhc/"
 gh variable set SITE_URL --body "https://gamsasyo.github.io/dkhc"
@@ -2090,7 +2090,7 @@ git push -u origin main
 gh run watch
 ```
 Expected: 워크플로 성공 → `https://gamsasyo.github.io/dkhc/ko/products/` 접속됨(커스텀 도메인은 Plan 2에서 연결하면서 `BASE_PATH=/`, `SITE_URL=https://dkhc.co.kr`로 변경).
-주의: private 리포의 GitHub Pages는 GitHub Pro/Team 이상에서만 가능. 무료 계정이면 **리포를 public으로** 만들거나(코드만 공개, 시트 ID는 시크릿이라 안전) 유료 플랜 — NEWSCAPE·64 Moves 전례대로 public 권장. 재영에게 확인 후 결정.
+리포는 **public** (재영 확정 2026-10-15 — 코드만 공개, 시트 ID는 시크릿).
 
 - [ ] **Step 3: Apps Script — 시트 메뉴 버튼**
 
