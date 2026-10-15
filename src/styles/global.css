@@ -39,3 +39,31 @@
   a { transition: color .2s, background-color .2s, border-color .2s; }
   :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
 }
+
+/* ── 모션 ─────────────────────────────────────────────── */
+/* 히어로 블롭: 2–4% 드리프트(18–26s, 왕복) + 느린 투명도 맥동(60–90s) */
+@keyframes blob-drift-a { to { transform: translate(3%, -2%) scale(1.03); } }
+@keyframes blob-drift-b { to { transform: translate(-2%, 3%) scale(1.04); } }
+@keyframes blob-drift-c { to { transform: translate(-3%, -2%) scale(1.02); } }
+@keyframes blob-drift-d { to { transform: translate(2%, 2%) scale(1.03); } }
+@keyframes blob-pulse { 50% { opacity: .72; } }
+.hero-blob { animation: var(--blob-drift) var(--blob-dur) ease-in-out infinite alternate, blob-pulse var(--blob-pulse, 75s) ease-in-out infinite; }
+.hero-blob-1 { --blob-drift: blob-drift-a; --blob-dur: 22s; --blob-pulse: 70s; }
+.hero-blob-2 { --blob-drift: blob-drift-b; --blob-dur: 26s; --blob-pulse: 85s; }
+.hero-blob-3 { --blob-drift: blob-drift-c; --blob-dur: 18s; --blob-pulse: 60s; }
+.hero-blob-4 { --blob-drift: blob-drift-d; --blob-dur: 24s; --blob-pulse: 90s; }
+
+/* 스크롤 리빌 초기 상태 — JS 가 <html class="reveal-init"> 를 붙였을 때만. JS 없으면 전부 보인다. */
+@media (prefers-reduced-motion: no-preference) {
+  html.reveal-init :is([data-reveal], [data-reveal-group] > *):not(.revealed) { opacity: 0; }
+}
+
+/* "자세히 보기 ›" 화살표 */
+.chev { display: inline-block; transition: transform .2s; }
+a:hover .chev { transform: translateX(4px); }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-blob { animation: none; }
+  .chev { transition: none; }
+  a:hover .chev { transform: none; }
+}
