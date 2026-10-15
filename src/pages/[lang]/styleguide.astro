@@ -1,0 +1,42 @@
+---
+import '../../styles/global.css';
+import Button from '../../components/ui/Button.astro';
+import Pill from '../../components/ui/Pill.astro';
+import Eyebrow from '../../components/ui/Eyebrow.astro';
+import Container from '../../components/ui/Container.astro';
+export const getStaticPaths = () => ['ko', 'en', 'ja'].map((lang) => ({ params: { lang } }));
+const { lang } = Astro.params;
+---
+<html lang={lang}>
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Styleguide</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+</head>
+<body class="py-16">
+  <Container class="space-y-12">
+    <section><Eyebrow>Typography</Eyebrow>
+      <h1 class="text-5xl mt-2">세계가 나아가는 길, 그 속에</h1>
+      <h2 class="text-3xl mt-4">Special Material</h2>
+      <p class="mt-4 max-w-2xl text-ink-2">(주)대경하이켐은 글로벌 첨단 소재 제조사로부터 우수한 제품을 수입 및 수출하여 고객에게 공급하는 무역상사입니다.</p>
+    </section>
+    <section><Eyebrow>Colors</Eyebrow>
+      <div class="mt-3 grid grid-cols-4 gap-3 md:grid-cols-8">
+        {['bg-brand','bg-brand-deep','bg-accent','bg-ink','bg-ink-2','bg-ink-3','bg-line','bg-surface','bg-tint-special','bg-tint-medical','bg-tint-eco'].map((c) =>
+          <div class={`h-16 rounded-card ${c} border border-line`} title={c}></div>)}
+      </div>
+    </section>
+    <section><Eyebrow>Buttons</Eyebrow>
+      <div class="mt-3 flex flex-wrap gap-3">
+        <Button>견적 문의</Button><Button variant="secondary">자료 요청</Button><Button variant="ghost">자세히 보기 ›</Button>
+        <Button size="sm">견적 문의</Button><Button size="sm" variant="secondary">자료 요청</Button>
+      </div>
+    </section>
+    <section><Eyebrow>Pills</Eyebrow>
+      <div class="mt-3 flex flex-wrap gap-2">
+        <Pill value="all" active>전체</Pill><Pill value="resin" count={8}>Resin</Pill><Pill value="film" count={9}>Film</Pill><Pill value="x" count={0}>Thermal</Pill>
+      </div>
+    </section>
+  </Container>
+</body>
+</html>

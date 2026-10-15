@@ -1,0 +1,10 @@
+---
+type Props = { active?: boolean; count?: number; value: string; class?: string; href?: string };
+const { active = false, count, value, class: cls = '', href } = Astro.props;
+const dim = count === 0 ? 'opacity-40' : '';
+const className = `pill inline-flex h-9 items-center gap-1.5 rounded-pill border px-3.5 text-sm font-medium transition-colors duration-200 ${
+  active ? 'border-accent bg-accent text-white' : 'border-line bg-white text-ink-2 hover:border-accent hover:text-accent'} ${dim} ${cls}`;
+---
+{href
+  ? <a href={href} class={className} data-value={value} aria-pressed={active}><slot />{count !== undefined && <span class="text-xs opacity-80">{count}</span>}</a>
+  : <button type="button" class={className} data-value={value} aria-pressed={active}><slot />{count !== undefined && <span class="text-xs opacity-80">{count}</span>}</button>}
