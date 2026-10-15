@@ -1,0 +1,23 @@
+{
+  "site.name": "Daekyung Hichem Co., Ltd.", "site.tagline": "Your most trusted partner for advanced materials",
+  "nav.products": "Products", "nav.makers": "Suppliers", "nav.company": "Company", "nav.contact": "Contact",
+  "search.placeholder": "Search products, suppliers, materials", "search.all": "All categories", "search.submit": "Search",
+  "products.title": "Products", "products.eyebrow": "PRODUCT",
+  "products.selectCategory": "Select a category", "products.selectSegment": "Segments in {category}",
+  "products.allSegments": "All", "products.results": "{count} results in {category}", "products.resultsAll": "{count} products",
+  "products.empty": "No products match", "products.emptyHint": "Try another keyword or browse the whole category.",
+  "products.viewDetail": "View details", "products.requestQuote": "Request quote", "products.requestDocs": "Request documents",
+  "products.principal": "Principal", "products.sameMaker": "More from this supplier", "products.sameSegment": "More in this segment",
+  "products.features": "Key features", "products.description": "Description", "products.backToList": "Back to list",
+  "makers.title": "Suppliers", "makers.eyebrow": "SUPPLIERS", "makers.count": "{count} products", "makers.all": "All",
+  "makers.products": "Products", "makers.website": "Website",
+  "category.special": "Special Material", "category.medical": "Medical", "category.eco": "Eco-Friendly",
+  "category.special.desc": "Engineering plastics · films · metals · machinery · thermal", "category.medical.desc": "Medical packaging · syringes · vials · absorbents",
+  "category.eco.desc": "Bio resins · biodegradable materials",
+  "segment.resin": "Resin", "segment.film": "Film", "segment.metal": "Metal", "segment.machine": "Machine", "segment.thermal": "Thermal Management",
+  "segment.absorption": "Absorption Products", "segment.syringe": "Syringe", "segment.vial": "Vial", "segment.packaging": "Special Packaging",
+  "segment.bio-resin": "Bio Resin", "segment.biodegradable": "Biodegradable",
+  "country.JP": "Japan", "country.CN": "China", "country.TW": "Taiwan", "country.US": "USA", "country.FI": "Finland", "country.KR": "Korea",
+  "footer.address": "3F Daekyung Bldg, 17-1 Yangpyeong-ro 12-gil, Yeongdeungpo-gu, Seoul, Korea", "footer.tel": "+82-2-3272-9581~5", "footer.fax": "+82-2-3272-9586",
+  "footer.email": "info@dkhc.co.kr", "footer.privacy": "Privacy Policy", "footer.copyright": "© 2026 Daekyung Hichem Co., Ltd. All rights reserved."
+}

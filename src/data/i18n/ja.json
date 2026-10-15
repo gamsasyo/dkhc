@@ -1,0 +1,23 @@
+{
+  "site.name": "㈱大京ハイケム", "site.tagline": "先端素材をつなぐ、最も信頼できるパートナー",
+  "nav.products": "製品", "nav.makers": "サプライヤー", "nav.company": "会社案内", "nav.contact": "お問い合わせ",
+  "search.placeholder": "製品名・メーカー・素材で検索", "search.all": "すべての分野", "search.submit": "検索",
+  "products.title": "製品", "products.eyebrow": "PRODUCT",
+  "products.selectCategory": "分野を選択", "products.selectSegment": "{category}の細分野",
+  "products.allSegments": "すべて", "products.results": "{category}の結果 {count}件", "products.resultsAll": "全製品 {count}件",
+  "products.empty": "条件に合う製品がありません", "products.emptyHint": "キーワードを変えるか、分野全体をご覧ください。",
+  "products.viewDetail": "詳細を見る", "products.requestQuote": "見積依頼", "products.requestDocs": "資料請求",
+  "products.principal": "メーカー", "products.sameMaker": "同じメーカーの製品", "products.sameSegment": "同じ分野の製品",
+  "products.features": "製品特徴", "products.description": "製品説明", "products.backToList": "一覧へ",
+  "makers.title": "サプライヤー", "makers.eyebrow": "SUPPLIERS", "makers.count": "製品 {count}件", "makers.all": "すべて",
+  "makers.products": "取扱製品", "makers.website": "ウェブサイト",
+  "category.special": "Special Material", "category.medical": "Medical", "category.eco": "Eco-Friendly",
+  "category.special.desc": "エンプラ・フィルム・金属・設備・放熱", "category.medical.desc": "医療用包装・シリンジ・バイアル・吸収材",
+  "category.eco.desc": "バイオ樹脂・生分解性素材",
+  "segment.resin": "Resin", "segment.film": "Film", "segment.metal": "Metal", "segment.machine": "Machine", "segment.thermal": "Thermal Management",
+  "segment.absorption": "Absorption Products", "segment.syringe": "Syringe", "segment.vial": "Vial", "segment.packaging": "Special Packaging",
+  "segment.bio-resin": "Bio Resin", "segment.biodegradable": "Biodegradable",
+  "country.JP": "日本", "country.CN": "中国", "country.TW": "台湾", "country.US": "アメリカ", "country.FI": "フィンランド", "country.KR": "韓国",
+  "footer.address": "ソウル特別市永登浦区楊坪路12ギル17-1 大京ビル3F", "footer.tel": "+82-2-3272-9581~5", "footer.fax": "+82-2-3272-9586",
+  "footer.email": "info@dkhc.co.kr", "footer.privacy": "個人情報保護方針", "footer.copyright": "© 2026 Daekyung Hichem Co., Ltd. All rights reserved."
+}
