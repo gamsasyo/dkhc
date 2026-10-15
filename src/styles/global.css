@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+@theme {
+  /* 색: 네이비 1 · 포인트 블루 1 · 회색 5단계 · 분야 틴트 3 */
+  --color-brand: #14255c;
+  --color-brand-deep: #0c1740;
+  --color-accent: #0a8fe0;
+  --color-accent-hover: #077ac0;
+  --color-ink: #1b1f2a;
+  --color-ink-2: #4b5160;
+  --color-ink-3: #8a90a0;
+  --color-line: #e3e6ec;
+  --color-surface: #f5f6f8;
+  --color-tint-special: #e4f0ff;
+  --color-tint-medical: #e6f7f1;
+  --color-tint-eco: #f0f6e4;
+
+  /* 타이포 */
+  --font-sans: "Pretendard Variable", Pretendard, "Noto Sans JP", system-ui, sans-serif;
+  --font-jp: "Noto Sans JP", "Pretendard Variable", system-ui, sans-serif;
+
+  /* 형 */
+  --radius-card: 16px;
+  --radius-input: 12px;
+  --radius-pill: 999px;
+  --shadow-card: 0 8px 24px -12px rgb(20 37 92 / 0.18);
+
+  /* 여백 */
+  --spacing-section: 6rem;
+  --spacing-section-sm: 4rem;
+  --container-site: 1200px;
+}
+
+@layer base {
+  html { font-family: var(--font-sans); color: var(--color-ink); letter-spacing: -0.01em; }
+  html[lang="ja"] { font-family: var(--font-jp); letter-spacing: 0; }
+  body { background: #fff; font-size: 16px; line-height: 1.6; }
+  h1, h2, h3, h4 { font-weight: 600; color: var(--color-brand); line-height: 1.25; }
+  a { transition: color .2s, background-color .2s, border-color .2s; }
+  :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+}

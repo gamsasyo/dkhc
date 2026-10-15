@@ -5,4 +5,3 @@ dist/
 .env.*
 .DS_Store
 .playwright-mcp/
-src/data/*.json
