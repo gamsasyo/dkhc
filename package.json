@@ -11,7 +11,8 @@
     "preview": "astro preview",
     "astro": "astro",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "scrape": "node scripts/scrape-legacy.ts"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.3",
