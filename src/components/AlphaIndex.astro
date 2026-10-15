@@ -1,0 +1,10 @@
+---
+type Props = { available: Set<string>; allLabel: string };
+const { available, allLabel } = Astro.props;
+const letters = [...'ABCDEFGHIJKLMNOPQRSTUVWXYZ', '#'];
+---
+<div class="flex flex-wrap gap-1 border-b border-line pb-3 text-sm font-semibold" data-alpha-index>
+  <button type="button" data-letter="" aria-pressed="true" class="alpha px-2 py-1 text-accent underline underline-offset-4">{allLabel}</button>
+  {letters.map((L) => <button type="button" data-letter={L} aria-pressed="false" disabled={!available.has(L)}
+    class="alpha px-2 py-1 text-ink-2 hover:text-accent disabled:text-ink-3/40 disabled:hover:text-ink-3/40">{L}</button>)}
+</div>

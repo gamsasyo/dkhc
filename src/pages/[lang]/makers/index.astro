@@ -1,0 +1,33 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Container from '../../../components/ui/Container.astro';
+import PageHero from '../../../components/PageHero.astro';
+import CategoryTiles from '../../../components/CategoryTiles.astro';
+import AlphaIndex from '../../../components/AlphaIndex.astro';
+import MakerCard from '../../../components/MakerCard.astro';
+import { t, isLocale } from '../../../lib/i18n';
+import { makersWithProducts, productsByMaker, catalogItems } from '../../../lib/data';
+import { countByCategory, initialOf } from '../../../lib/catalog';
+export const getStaticPaths = () => ['ko', 'en', 'ja'].map((lang) => ({ params: { lang } }));
+const { lang } = Astro.params; if (!isLocale(lang)) return Astro.redirect('/ko/');
+const list = makersWithProducts().map((m) => {
+  const ps = productsByMaker(m.id);
+  return { maker: m, count: ps.length, categories: [...new Set(ps.map((p) => p.category))] };
+}).sort((a, b) => a.maker.name.localeCompare(b.maker.name, 'en'));
+const available = new Set(list.map((x) => initialOf(x.maker.name)));
+---
+<Base title={t(lang, 'makers.title')} path="/makers/">
+  <PageHero eyebrow={t(lang, 'makers.eyebrow')} title={t(lang, 'makers.title')} tint="medical" />
+  <Container class="py-10 md:py-14" data-makers>
+    <h2 class="text-base font-semibold text-brand">{t(lang, 'products.selectCategory')}</h2>
+    <div class="mt-3"><CategoryTiles locale={lang} counts={countByCategory(catalogItems)} /></div>
+    <div class="mt-8"><AlphaIndex available={available} allLabel={t(lang, 'makers.all')} /></div>
+    <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {list.map((x) => <MakerCard locale={lang} maker={x.maker} count={x.count} categories={x.categories} />)}
+    </div>
+  </Container>
+</Base>
+<script>
+  import { initMakers } from '../../../components/islands/makers';
+  document.querySelectorAll<HTMLElement>('[data-makers]').forEach(initMakers);
+</script>

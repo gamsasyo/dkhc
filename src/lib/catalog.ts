@@ -48,3 +48,9 @@ export function serializeQuery(q: Query): string {
   const s = sp.toString();
   return s ? `?${s}` : '';
 }
+
+export type MakerItem = { id: string; name: string; categories: string[] };
+export const initialOf = (name: string) => { const c = name.trim().charAt(0).toUpperCase(); return /[A-Z]/.test(c) ? c : '#'; };
+export function filterMakers<T extends MakerItem>(items: T[], f: { cat?: string; letter?: string }): T[] {
+  return items.filter((m) => (!f.cat || m.categories.includes(f.cat)) && (!f.letter || initialOf(m.name) === f.letter));
+}
