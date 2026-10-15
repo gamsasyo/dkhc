@@ -18,6 +18,10 @@
   "segment.absorption": "Absorption Products", "segment.syringe": "Syringe", "segment.vial": "Vial", "segment.packaging": "Special Packaging",
   "segment.bio-resin": "Bio Resin", "segment.biodegradable": "Biodegradable",
   "country.JP": "Japan", "country.CN": "China", "country.TW": "Taiwan", "country.US": "USA", "country.FI": "Finland", "country.KR": "Korea",
+  "company.eyebrow": "COMPANY", "company.overview": "Overview", "company.greeting": "Greeting", "company.history": "History", "company.clients": "Clients", "company.location": "Location",
+  "company.name": "Company", "company.founded": "Founded", "company.founded.value": "July 1990 (incorporated 2010)", "company.ceo": "CEO", "company.ceo.value": "Byung Kil Lee",
+  "company.address": "Address", "company.business": "Business", "company.business.value": "Import and export of special engineering resins, films, tapes, chemicals and equipment",
+  "company.map.naver": "Naver Map", "company.map.kakao": "Kakao Map", "company.map.google": "Google Maps",
   "footer.address": "3F Daekyung Bldg, 17-1 Yangpyeong-ro 12-gil, Yeongdeungpo-gu, Seoul, Korea", "footer.tel": "+82-2-3272-9581~5", "footer.fax": "+82-2-3272-9586",
   "footer.email": "info@dkhc.co.kr", "footer.privacy": "Privacy Policy", "footer.copyright": "© 2026 Daekyung Hichem Co., Ltd. All rights reserved."
 }

@@ -18,6 +18,10 @@
   "segment.absorption": "Absorption Products", "segment.syringe": "Syringe", "segment.vial": "Vial", "segment.packaging": "Special Packaging",
   "segment.bio-resin": "Bio Resin", "segment.biodegradable": "Biodegradable",
   "country.JP": "日本", "country.CN": "中国", "country.TW": "台湾", "country.US": "アメリカ", "country.FI": "フィンランド", "country.KR": "韓国",
+  "company.eyebrow": "COMPANY", "company.overview": "概要", "company.greeting": "ご挨拶", "company.history": "沿革", "company.clients": "主要取引先", "company.location": "アクセス",
+  "company.name": "会社名", "company.founded": "設立", "company.founded.value": "1990年7月（2010年法人転換）", "company.ceo": "代表理事", "company.ceo.value": "李丙吉",
+  "company.address": "住所", "company.business": "事業内容", "company.business.value": "特殊エンジニアリング樹脂、フィルム、テープ、化学製品、装備などの輸入および輸出",
+  "company.map.naver": "NAVERマップ", "company.map.kakao": "カカオマップ", "company.map.google": "Googleマップ",
   "footer.address": "ソウル特別市永登浦区楊坪路12ギル17-1 大京ビル3F", "footer.tel": "+82-2-3272-9581~5", "footer.fax": "+82-2-3272-9586",
   "footer.email": "info@dkhc.co.kr", "footer.privacy": "個人情報保護方針", "footer.copyright": "© 2026 Daekyung Hichem Co., Ltd. All rights reserved."
 }

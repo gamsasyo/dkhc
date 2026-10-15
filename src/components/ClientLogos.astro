@@ -1,0 +1,21 @@
+---
+import { Image } from 'astro:assets';
+import { company, CLIENT_LOGO_COUNT } from '../lib/company';
+import type { Locale } from '../lib/i18n';
+type Props = { locale: Locale; class?: string };
+const { locale, class: cls = '' } = Astro.props;
+const logos = import.meta.glob<{ default: ImageMetadata }>('../assets/clients/partner*.gif', { eager: true });
+const names = company[locale].clients;
+const items = Array.from({ length: CLIENT_LOGO_COUNT }, (_, i) => {
+  const n = String(i + 1).padStart(2, '0');
+  return { src: logos[`../assets/clients/partner${n}.gif`]?.default, name: names[i] ?? `partner${n}` };
+}).filter((x) => x.src);
+---
+<ul class={`grid grid-cols-3 gap-3 md:grid-cols-6 ${cls}`} data-client-logos>
+  {items.map((it) => (
+    <li class="grid h-20 place-items-center rounded-card border border-line bg-white px-4" title={it.name}>
+      <Image src={it.src!} alt={it.name} loading="eager"
+        class="max-h-7 w-auto max-w-full object-contain grayscale opacity-70 transition-[filter,opacity] duration-200 hover:grayscale-0 hover:opacity-100" />
+    </li>
+  ))}
+</ul>

@@ -1,0 +1,106 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Container from '../../../components/ui/Container.astro';
+import Eyebrow from '../../../components/ui/Eyebrow.astro';
+import Button from '../../../components/ui/Button.astro';
+import PageHero from '../../../components/PageHero.astro';
+import ClientLogos from '../../../components/ClientLogos.astro';
+import { t, isLocale, pick } from '../../../lib/i18n';
+import { history } from '../../../lib/data';
+import { company } from '../../../lib/company';
+export const getStaticPaths = () => ['ko', 'en', 'ja'].map((lang) => ({ params: { lang } }));
+const { lang } = Astro.params; if (!isLocale(lang)) return Astro.redirect('/ko/');
+const c = company[lang];
+const addressKo = t('ko', 'footer.address');
+const addressEn = t('en', 'footer.address');
+const address = t(lang, 'footer.address');
+const maps = [
+  { label: t(lang, 'company.map.naver'), href: `https://map.naver.com/p/search/${encodeURIComponent(addressKo)}` },
+  { label: t(lang, 'company.map.kakao'), href: `https://map.kakao.com/?q=${encodeURIComponent(addressKo)}` },
+  ...(lang === 'ko' ? [] : [{ label: t(lang, 'company.map.google'), href: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addressEn)}` }]),
+];
+const facts = [
+  [t(lang, 'company.name'), t(lang, 'site.name')],
+  [t(lang, 'company.founded'), t(lang, 'company.founded.value')],
+  [t(lang, 'company.ceo'), t(lang, 'company.ceo.value')],
+  [t(lang, 'company.address'), address],
+  [t(lang, 'company.business'), t(lang, 'company.business.value')],
+];
+const section = 'py-section-sm md:py-section';
+---
+<Base title={t(lang, 'nav.company')} description={c.lead} path="/company/">
+  <PageHero eyebrow={t(lang, 'company.eyebrow')} title={t(lang, 'nav.company')} tint="eco" />
+
+  <section id="overview" class={section}>
+    <Container class="grid gap-10 md:grid-cols-[1fr_1.2fr] md:gap-16">
+      <div>
+        <Eyebrow>{t(lang, 'company.eyebrow')}</Eyebrow>
+        <h2 class="mt-2 text-3xl">{t(lang, 'company.overview')}</h2>
+        <p class="mt-6 text-[17px] leading-relaxed text-ink-2">{c.overview}</p>
+      </div>
+      <dl class="self-start divide-y divide-line rounded-card border border-line bg-surface/60 px-6">
+        {facts.map(([k, v]) => (
+          <div class="grid gap-1 py-4 sm:grid-cols-[7rem_1fr] sm:gap-4">
+            <dt class="text-sm font-semibold text-ink-3">{k}</dt>
+            <dd class="text-[15px] text-ink">{v}</dd>
+          </div>
+        ))}
+      </dl>
+    </Container>
+  </section>
+
+  <section id="greeting" class={`${section} bg-surface`}>
+    <Container class="max-w-3xl">
+      <Eyebrow>{t(lang, 'company.eyebrow')}</Eyebrow>
+      <h2 class="mt-2 text-3xl">{t(lang, 'company.greeting')}</h2>
+      <p class="mt-8 text-xl font-semibold text-brand md:text-2xl">{c.greeting.title}</p>
+      <div class="mt-6 space-y-5 text-[17px] leading-relaxed text-ink-2">
+        {c.greeting.paragraphs.map((p) => <p>{p}</p>)}
+      </div>
+      <p class="mt-10 text-right text-lg font-semibold text-brand">{c.greeting.signature}</p>
+    </Container>
+  </section>
+
+  <section id="history" class={section}>
+    <Container class="grid gap-10 md:grid-cols-[1fr_2fr] md:gap-16">
+      <div>
+        <Eyebrow>{t(lang, 'company.eyebrow')}</Eyebrow>
+        <h2 class="mt-2 text-3xl">{t(lang, 'company.history')}</h2>
+      </div>
+      <ol class="relative border-l border-line">
+        {history.map((h) => (
+          <li class="relative grid gap-1 pb-8 pl-8 last:pb-0 sm:grid-cols-[5rem_1fr] sm:gap-6">
+            <span class="absolute -left-[5px] top-2 h-[9px] w-[9px] rounded-full bg-accent"></span>
+            <span class="text-lg font-bold leading-7 text-brand">{h.year}</span>
+            <p class="leading-7 text-ink-2">{pick(h.text, lang)}</p>
+          </li>
+        ))}
+      </ol>
+    </Container>
+  </section>
+
+  <section id="clients" class={`${section} bg-surface`}>
+    <Container>
+      <Eyebrow>{t(lang, 'company.eyebrow')}</Eyebrow>
+      <h2 class="mt-2 text-3xl">{t(lang, 'company.clients')}</h2>
+      <ClientLogos locale={lang} class="mt-8" />
+    </Container>
+  </section>
+
+  <section id="location" class={section}>
+    <Container class="grid gap-8 md:grid-cols-[1fr_2fr] md:gap-16">
+      <div>
+        <Eyebrow>{t(lang, 'company.eyebrow')}</Eyebrow>
+        <h2 class="mt-2 text-3xl">{t(lang, 'company.location')}</h2>
+      </div>
+      <div class="rounded-card border border-line p-6 md:p-8">
+        <p class="text-lg font-semibold text-brand">{address}</p>
+        <p class="mt-2 text-[15px] text-ink-2">Tel {t(lang, 'footer.tel')} · Fax {t(lang, 'footer.fax')}</p>
+        <p class="text-[15px] text-ink-2"><a class="text-accent hover:underline" href={`mailto:${t(lang, 'footer.email')}`}>{t(lang, 'footer.email')}</a></p>
+        <div class="mt-6 flex flex-wrap gap-2">
+          {maps.map((m) => <Button href={m.href} variant="secondary" size="sm" target="_blank" rel="noopener">{m.label} ↗</Button>)}
+        </div>
+      </div>
+    </Container>
+  </section>
+</Base>
