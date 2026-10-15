@@ -30,7 +30,7 @@ const features = pickList(p.features, lang);
     <div class="mt-4 grid gap-10 lg:grid-cols-[1fr_320px]">
       <article>
         <Eyebrow>{t(lang, `category.${p.category}`)} · {p.segments.map((s) => t(lang, `segment.${s}`)).join(' · ')}</Eyebrow>
-        <h1 class="mt-2 text-4xl">{pick(p.name, lang)}</h1>
+        <h1 class="mt-2 text-4xl" transition:name={`product-title-${p.id}`}>{pick(p.name, lang)}</h1>
         {hero && <Image src={hero} alt={pick(p.name, lang)} width={960} class="mt-8 w-full rounded-card border border-line object-contain" />}
         <section class="mt-10">
           <h2 class="text-xl">{t(lang, 'products.description')}</h2>
@@ -50,7 +50,9 @@ const features = pickList(p.features, lang);
       <aside class="h-fit rounded-card border border-line bg-white p-6 lg:sticky lg:top-24">
         <Eyebrow>{t(lang, 'products.principal')}</Eyebrow>
         <a href={localizePath(lang, `/makers/${maker.id}/`)} class="mt-3 block">
-          {logo ? <Image src={logo} alt={maker.name} height={44} class="h-11 w-auto max-w-[180px] object-contain" /> : null}
+          <span class="flex items-center" transition:name={`maker-logo-${p.id}`}>
+            {logo ? <Image src={logo} alt={maker.name} height={44} class="h-11 w-auto max-w-[180px] object-contain" /> : null}
+          </span>
           <span class="mt-2 block text-lg font-semibold text-brand">{maker.name}</span>
           {maker.country && <span class="text-sm text-ink-3">{t(lang, `country.${maker.country}`)}</span>}
         </a>

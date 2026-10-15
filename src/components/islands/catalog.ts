@@ -1,7 +1,10 @@
 import { filterProducts, countBySegment, countByCategory, parseQuery, serializeQuery, type CatalogItem, type Query } from '../../lib/catalog';
 import { CATEGORIES, type Category } from '../../lib/schema';
+import { popCheck } from '../../lib/motion';
 
 export function initCatalog(root: HTMLElement) {
+  if (root.dataset.bound) return; // ClientRouter: astro:page-load 마다 호출되므로 1회만
+  root.dataset.bound = '1';
   const items: CatalogItem[] = JSON.parse(root.querySelector('#catalog-data')!.textContent!);
   const labels = JSON.parse(root.dataset.labels!) as { results: string; resultsAll: string; category: Record<string, string> };
   const tiles = root.querySelectorAll<HTMLElement>('[data-category]');
@@ -23,7 +26,9 @@ export function initCatalog(root: HTMLElement) {
       const on = tl.dataset.category === q.cat;
       tl.setAttribute('aria-pressed', String(on));
       tl.classList.toggle('border-accent', on); tl.classList.toggle('border-transparent', !on);
-      tl.querySelector('[data-check]')?.classList.toggle('hidden', !on);
+      const check = tl.querySelector('[data-check]');
+      if (check && on && check.classList.contains('hidden')) popCheck(check);
+      check?.classList.toggle('hidden', !on);
     });
     // 세부 pill 행 + 개수 (검색어/메이커 반영한 개수)
     const scoped = filterProducts(items, { q: q.q, maker: q.maker });
@@ -50,7 +55,7 @@ export function initCatalog(root: HTMLElement) {
       : labels.resultsAll.replace('{count}', String(visible.size));
     empty.classList.toggle('hidden', visible.size > 0);
     if (clearBtn) clearBtn.classList.toggle('hidden', !q.cat && !q.seg && !q.q && !q.maker);
-    if (push) history.replaceState(null, '', location.pathname + serializeQuery(q));
+    if (push) history.replaceState(history.state, '', location.pathname + serializeQuery(q)); // history.state 유지 — ClientRouter 가 뒤로가기 판단에 쓴다
   }
 
   tiles.forEach((tl) => tl.addEventListener('click', (e) => {
@@ -73,6 +78,6 @@ export function initCatalog(root: HTMLElement) {
     timer = window.setTimeout(() => { q = { ...q, q: s.value.trim() || undefined }; render(); }, 120);
   }));
   clearBtn?.addEventListener('click', () => { q = {}; setSearch(''); render(); });
-  window.addEventListener('popstate', () => { q = parseQuery(location.search); setSearch(q.q ?? ''); render(false); });
+  window.addEventListener('popstate', () => { if (!root.isConnected) return; q = parseQuery(location.search); setSearch(q.q ?? ''); render(false); });
   render(false);
 }

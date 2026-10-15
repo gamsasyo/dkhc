@@ -63,7 +63,9 @@ const label = 'block text-sm font-semibold text-ink-2';
 </Base>
 <script>
   // TODO(plan2): POST to Apps Script — 지금은 mailto 로 임시 전송
-  document.querySelectorAll<HTMLFormElement>('[data-contact-form]').forEach((form) => {
+  document.addEventListener('astro:page-load', () => document.querySelectorAll<HTMLFormElement>('[data-contact-form]').forEach((form) => {
+    if (form.dataset.bound) return;
+    form.dataset.bound = '1';
     const product = new URLSearchParams(location.search).get('product');
     if (product) (form.elements.namedItem('subject') as HTMLInputElement).value = `${form.dataset.quotePrefix}${product}`;
     form.addEventListener('submit', (e) => {
@@ -77,5 +79,5 @@ const label = 'block text-sm font-semibold text-ink-2';
       ].join('\n');
       location.href = `mailto:${form.dataset.email}?subject=${encodeURIComponent(v('subject'))}&body=${encodeURIComponent(body)}`;
     });
-  });
+  }));
 </script>

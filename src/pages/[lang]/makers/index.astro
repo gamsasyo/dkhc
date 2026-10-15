@@ -22,12 +22,12 @@ const available = new Set(list.map((x) => initialOf(x.maker.name)));
     <h2 class="text-base font-semibold text-brand">{t(lang, 'products.selectCategory')}</h2>
     <div class="mt-3"><CategoryTiles locale={lang} counts={countByCategory(catalogItems)} /></div>
     <div class="mt-8"><AlphaIndex available={available} allLabel={t(lang, 'makers.all')} /></div>
-    <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4" data-reveal-group="once">
       {list.map((x) => <MakerCard locale={lang} maker={x.maker} count={x.count} categories={x.categories} />)}
     </div>
   </Container>
 </Base>
 <script>
   import { initMakers } from '../../../components/islands/makers';
-  document.querySelectorAll<HTMLElement>('[data-makers]').forEach(initMakers);
+  document.addEventListener('astro:page-load', () => document.querySelectorAll<HTMLElement>('[data-makers]').forEach(initMakers));
 </script>

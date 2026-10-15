@@ -20,7 +20,7 @@ const logo = maker.logo ? logos[`../../../assets/makers/${maker.logo}`]?.default
   <Container class="py-10 md:py-14">
     <a href={localizePath(lang, '/makers/')} class="text-sm font-medium text-ink-3 hover:text-accent">‹ {t(lang, 'makers.title')}</a>
     <header class="mt-4 flex flex-col gap-6 rounded-card border border-line p-6 md:flex-row md:items-center md:p-8">
-      <div class="grid h-24 w-48 shrink-0 place-items-center rounded-card bg-surface p-4">
+      <div class="grid h-24 w-48 shrink-0 place-items-center rounded-card bg-surface p-4" transition:name={`maker-${maker.id}`}>
         {logo ? <Image src={logo} alt={maker.name} height={56} class="max-h-14 w-auto object-contain" /> : <span class="text-xl font-bold text-brand">{maker.name}</span>}
       </div>
       <div class="min-w-0">

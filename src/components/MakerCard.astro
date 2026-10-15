@@ -9,7 +9,7 @@ const logo = maker.logo ? logos[`../assets/makers/${maker.logo}`]?.default : und
 ---
 <a href={localizePath(locale, `/makers/${maker.id}/`)} data-maker-card data-id={maker.id} data-name={maker.name} data-categories={categories.join(',')}
   class="group flex flex-col overflow-hidden rounded-card border border-line bg-white transition-shadow duration-200 hover:shadow-card">
-  <div class="grid h-32 place-items-center bg-surface p-6">
+  <div class="grid h-32 place-items-center bg-surface p-6" transition:name={`maker-${maker.id}`}>
     {logo ? <Image src={logo} alt={maker.name} height={48} class="max-h-12 w-auto max-w-[70%] object-contain" /> : <span class="text-xl font-bold text-brand">{maker.name}</span>}
   </div>
   <div class="flex items-center justify-between p-4">
@@ -17,6 +17,6 @@ const logo = maker.logo ? logos[`../assets/makers/${maker.logo}`]?.default : und
       <div class="font-semibold text-brand">{maker.name}</div>
       <div class="text-sm text-ink-3">{t(locale, 'makers.count', { count })}{maker.country && ` · ${t(locale, `country.${maker.country}`)}`}</div>
     </div>
-    <span class="text-ink-3 transition-colors group-hover:text-accent">›</span>
+    <span class="chev text-ink-3 transition-colors group-hover:text-accent">›</span>
   </div>
 </a>

@@ -43,7 +43,7 @@ const labels = { results: t(lang, 'products.results'), resultsAll: t(lang, 'prod
       </div>
     </div>
 
-    <div class="mt-6 flex flex-col gap-4" data-product-list>
+    <div class="mt-6 flex flex-col gap-4" data-product-list data-reveal-group="once">
       {products.map((p) => <ProductListCard locale={lang} product={p} maker={getMaker(p.makerId)!} />)}
     </div>
 
@@ -56,5 +56,5 @@ const labels = { results: t(lang, 'products.results'), resultsAll: t(lang, 'prod
 </Base>
 <script>
   import { initCatalog } from '../../../components/islands/catalog';
-  document.querySelectorAll<HTMLElement>('[data-catalog]').forEach(initCatalog);
+  document.addEventListener('astro:page-load', () => document.querySelectorAll<HTMLElement>('[data-catalog]').forEach(initCatalog));
 </script>

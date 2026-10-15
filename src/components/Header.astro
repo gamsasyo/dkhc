@@ -43,11 +43,16 @@ const LABEL: Record<Locale, string> = { ko: 'KO', en: 'EN', ja: 'JA' };
   </div>
 </header>
 <script>
-  document.querySelectorAll<HTMLButtonElement>('[data-menu-toggle]').forEach((btn) => {
-    const panel = btn.closest('header')!.querySelector<HTMLElement>('[data-menu]')!;
-    btn.addEventListener('click', () => {
-      const open = panel.classList.toggle('hidden') === false;
-      btn.setAttribute('aria-expanded', String(open));
+  function initMenu() {
+    document.querySelectorAll<HTMLButtonElement>('[data-menu-toggle]').forEach((btn) => {
+      if (btn.dataset.bound) return;
+      btn.dataset.bound = '1';
+      const panel = btn.closest('header')!.querySelector<HTMLElement>('[data-menu]')!;
+      btn.addEventListener('click', () => {
+        const open = panel.classList.toggle('hidden') === false;
+        btn.setAttribute('aria-expanded', String(open));
+      });
     });
-  });
+  }
+  document.addEventListener('astro:page-load', initMenu);
 </script>
