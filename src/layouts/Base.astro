@@ -4,6 +4,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { ClientRouter } from 'astro:transitions';
 import { isLocale, localizePath, otherLocales, t, type Locale } from '../lib/i18n';
+import { company } from '../lib/company';
 type Props = { title: string; description?: string; path: string /* 로케일 제외 경로, 예 '/products/' */ };
 const { title, description = '', path } = Astro.props;
 const lang = Astro.params.lang;
@@ -11,6 +12,12 @@ if (!isLocale(lang)) throw new Error(`unknown locale ${lang}`);
 const locale: Locale = lang;
 const canonical = new URL(localizePath(locale, path), Astro.site);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+// 공유 미리보기(카톡·슬랙 등): 홈은 회사명 + 회사 소개, 하위 페이지는 "페이지 | 회사명"
+const siteName = t(locale, 'site.name');
+const ogTitle = path === '/' ? siteName : `${title} | ${siteName}`;
+const ogDesc = description || company[locale].lead;
+const ogImage = new URL(`${base}/og-image.png`, Astro.site);
+const OG_LOCALE: Record<Locale, string> = { ko: 'ko_KR', en: 'en_US', ja: 'ja_JP' };
 ---
 <!doctype html>
 <html lang={locale}>
@@ -24,9 +31,17 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   {description && <meta name="description" content={description} />}
   <link rel="canonical" href={canonical} />
   {[locale, ...otherLocales(locale)].map((l) => <link rel="alternate" hreflang={l} href={new URL(localizePath(l, path), Astro.site)} />)}
-  <meta property="og:title" content={title} />
-  <meta property="og:site_name" content={t(locale, 'site.name')} />
-  <meta property="og:image" content={new URL(`${base}/og-image.png`, Astro.site)} />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:title" content={ogTitle} />
+  <meta property="og:description" content={ogDesc} />
+  <meta property="og:site_name" content={siteName} />
+  <meta property="og:locale" content={OG_LOCALE[locale]} />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content={siteName} />
+  <meta name="twitter:card" content="summary_large_image" />
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
   {locale === 'ja' && <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" />}
