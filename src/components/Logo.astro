@@ -1,0 +1,15 @@
+---
+// CI 시그니처 (design/logo/export.html에서 글자를 아웃라인으로 뽑은 원본)
+// D·DAEKYUNG = currentColor, K 팔·HICHEM = --logo-pt (기본 네이비). 반전은 text-white + [--logo-pt:#fff]
+// solid: 줄무늬 없는 축소용 — CI 매뉴얼 A-10, 가로형 폭 160px 미만에서 사용
+import horizontal from '../assets/brand/dkhc-signature-horizontal.site.svg?raw';
+import horizontalSolid from '../assets/brand/dkhc-signature-horizontal-solid.site.svg?raw';
+import symbol from '../assets/brand/dkhc-symbol.site.svg?raw';
+import header from '../assets/brand/dkhc-signature-horizontal-nohichem.site.svg?raw'; // 헤더: HICHEM 뺀 버전
+type Props = { variant?: 'horizontal' | 'header' | 'symbol'; solid?: boolean; label: string /* '' = 장식용 */; class?: string };
+const { variant = 'horizontal', solid = false, label, class: className } = Astro.props;
+const src = variant === 'symbol' ? symbol : variant === 'header' ? header : solid ? horizontalSolid : horizontal;
+// 고정 width/height를 빼고 높이만 CSS로 — 폭은 비율대로
+const svg = src.replace(/ width="[\d.]+" height="[\d.]+"/, '');
+---
+<span class:list={['inline-block [&>svg]:block [&>svg]:h-full [&>svg]:w-auto', className]} {...(label ? { role: 'img', 'aria-label': label } : { 'aria-hidden': 'true' })} set:html={svg} />

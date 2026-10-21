@@ -12,19 +12,19 @@ const countries = [
   ['KR', t(lang, 'country.KR')], ['JP', t(lang, 'country.JP')], ['CN', t(lang, 'country.CN')],
   ['TW', t(lang, 'country.TW')], ['US', t(lang, 'country.US')], ['OTHER', t(lang, 'contact.form.country.other')],
 ];
-const field = 'mt-1.5 h-12 w-full rounded-input border border-line bg-white px-4 text-[15px] outline-none focus:border-accent';
+const field = 'mt-1.5 h-12 w-full rounded-input border border-line bg-white px-4 text-base outline-none focus:border-accent';
 const label = 'block text-sm font-semibold text-ink-2';
 ---
 <Base title={t(lang, 'nav.contact')} description={t(lang, 'contact.lead')} path="/contact/">
-  <PageHero eyebrow={t(lang, 'contact.eyebrow')} title={t(lang, 'nav.contact')} tint="medical" />
+  <PageHero eyebrow={t(lang, 'contact.eyebrow')} title={t(lang, 'nav.contact')} />
   <Container class="py-section-sm md:py-section">
-    <p class="max-w-2xl text-[17px] leading-relaxed text-ink-2">{t(lang, 'contact.lead')}</p>
+    <p class="max-w-2xl text-lg leading-relaxed text-ink-2">{t(lang, 'contact.lead')}</p>
     <div class="mt-10 grid gap-8 md:grid-cols-[1fr_1.6fr] md:gap-12">
 
       <aside class="self-start rounded-card bg-surface p-6 md:p-8">
         <Eyebrow>{t(lang, 'contact.eyebrow')}</Eyebrow>
         <h2 class="mt-2 text-2xl">{t(lang, 'contact.info')}</h2>
-        <dl class="mt-6 space-y-5 text-[15px]">
+        <dl class="mt-6 space-y-5 text-base">
           <div><dt class="text-xs font-semibold uppercase tracking-[0.08em] text-ink-3">{t(lang, 'company.address')}</dt><dd class="mt-1 text-ink">{t(lang, 'footer.address')}</dd></div>
           <div><dt class="text-xs font-semibold uppercase tracking-[0.08em] text-ink-3">Tel</dt><dd class="mt-1 text-ink">{t(lang, 'footer.tel')}</dd></div>
           <div><dt class="text-xs font-semibold uppercase tracking-[0.08em] text-ink-3">Fax</dt><dd class="mt-1 text-ink">{t(lang, 'footer.fax')}</dd></div>
@@ -49,8 +49,8 @@ const label = 'block text-sm font-semibold text-ink-2';
             <textarea name="message" required rows="6" class={`${field} h-auto py-3`}></textarea>
           </label>
           <label class="flex items-start gap-2 text-sm text-ink-2 sm:col-span-2">
-            <input name="privacy" type="checkbox" required class="mt-1 h-4 w-4 accent-accent" />
-            <span>{t(lang, 'contact.form.privacy')} <a class="text-accent hover:underline" href={localizePath(lang, '/privacy/')}>›</a></span>
+            <input name="privacy" type="checkbox" required class="mt-0.5 h-5 w-5 accent-accent" />
+            <span>{t(lang, 'contact.form.privacy')} <a class="-my-2 inline-block px-2 py-2 text-accent hover:underline" href={localizePath(lang, '/privacy/')}>›</a></span>
           </label>
         </div>
         <div class="mt-6 flex flex-wrap items-center gap-4">

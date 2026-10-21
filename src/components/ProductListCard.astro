@@ -11,13 +11,14 @@ const logos = import.meta.glob<{ default: ImageMetadata }>('../assets/makers/*',
 const logo = maker.logo ? logos[`../assets/makers/${maker.logo}`]?.default : undefined;
 const quoteHref = localizePath(locale, `/contact/?product=${encodeURIComponent(p.name.ko)}`);
 ---
-<article class="group relative rounded-card border border-line bg-white p-5 transition-shadow duration-200 hover:shadow-card md:p-6"
+<article class="group relative rounded-card border border-line bg-white p-5 transition-[box-shadow,border-color,transform] duration-200 hover:border-brand hover:shadow-[0_16px_36px_-16px_rgb(15_60_140/0.4)] focus-within:border-brand motion-safe:hover:-translate-y-0.5 md:p-6"
   data-product-card data-id={p.id}>
+  <span aria-hidden="true" class="pointer-events-none absolute inset-y-3 left-0 w-1 rounded-r-full bg-brand opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-within:opacity-100"></span>
   <div class="grid gap-4 md:grid-cols-[1fr_150px]">
     <div>
       <Eyebrow>{t(locale, `category.${p.category}`)} · {p.segments.map((s) => t(locale, `segment.${s}`)).join(' · ')}</Eyebrow>
-      <h3 class="mt-1 text-xl" transition:name={`product-title-${p.id}`}><a href={href} class="after:absolute after:inset-0">{pick(p.name, locale)}</a></h3>
-      <p class="mt-2 line-clamp-2 text-[15px] text-ink-2">{pick(p.summary, locale) || pick(p.body, locale)}</p>
+      <h3 class="mt-1 text-xl transition-colors group-hover:text-accent" transition:name={`product-title-${p.id}`}><a href={href} class="after:absolute after:inset-0">{pick(p.name, locale)}</a></h3>
+      <p class="mt-2 line-clamp-2 text-base text-ink-2">{pick(p.summary, locale) || pick(p.body, locale)}</p>
     </div>
     <div class="flex flex-row items-center gap-3 border-line md:flex-col md:justify-center md:border-l md:pl-5">
       <span class="flex items-center" transition:name={`maker-logo-${p.id}`}>
@@ -29,6 +30,6 @@ const quoteHref = localizePath(locale, `/contact/?product=${encodeURIComponent(p
   <div class="relative z-10 mt-4 flex flex-wrap gap-2">
     <Button size="sm" variant="secondary" href={quoteHref}>{t(locale, 'products.requestDocs')}</Button>
     <Button size="sm" href={quoteHref}>{t(locale, 'products.requestQuote')}</Button>
-    <a href={href} class="ml-auto self-center text-sm font-semibold text-accent">{t(locale, 'products.viewDetail')} <span class="chev">›</span></a>
+    <a href={href} class="ml-auto self-center text-sm font-semibold text-accent">{t(locale, 'products.viewDetail')} <span class="chev group-hover:translate-x-1">›</span></a>
   </div>
 </article>

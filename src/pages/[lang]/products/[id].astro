@@ -4,6 +4,7 @@ import Base from '../../../layouts/Base.astro';
 import Container from '../../../components/ui/Container.astro';
 import Button from '../../../components/ui/Button.astro';
 import Eyebrow from '../../../components/ui/Eyebrow.astro';
+import PageHero from '../../../components/PageHero.astro';
 import ProductListCard from '../../../components/ProductListCard.astro';
 import { t, isLocale, localizePath, pick, pickList, LOCALES } from '../../../lib/i18n';
 import { products, getMaker, productsByMaker } from '../../../lib/data';
@@ -25,21 +26,21 @@ const quoteHref = localizePath(lang, `/contact/?product=${encodeURIComponent(p.n
 const features = pickList(p.features, lang);
 ---
 <Base title={pick(p.name, lang)} description={pick(p.summary, lang)} path={`/products/${p.id}/`}>
+  <PageHero eyebrow={`${t(lang, `category.${p.category}`)} · ${p.segments.map((s) => t(lang, `segment.${s}`)).join(' · ')}`}
+    title={pick(p.name, lang)} transitionName={`product-title-${p.id}`}
+    back={{ href: localizePath(lang, `/products/?cat=${p.category}`), label: t(lang, 'products.backToList') }} />
   <Container class="py-10 md:py-14">
-    <a href={localizePath(lang, `/products/?cat=${p.category}`)} class="text-sm font-medium text-ink-3 hover:text-accent">‹ {t(lang, 'products.backToList')}</a>
-    <div class="mt-4 grid gap-10 lg:grid-cols-[1fr_320px]">
+    <div class="grid gap-10 lg:grid-cols-[1fr_320px]">
       <article>
-        <Eyebrow>{t(lang, `category.${p.category}`)} · {p.segments.map((s) => t(lang, `segment.${s}`)).join(' · ')}</Eyebrow>
-        <h1 class="mt-2 text-4xl" transition:name={`product-title-${p.id}`}>{pick(p.name, lang)}</h1>
-        {hero && <Image src={hero} alt={pick(p.name, lang)} width={960} class="mt-8 w-full rounded-card border border-line object-contain" />}
-        <section class="mt-10">
+        {hero && <Image src={hero} alt={pick(p.name, lang)} width={960} class="mb-10 w-full rounded-card border border-line object-contain" />}
+        <section>
           <h2 class="text-xl">{t(lang, 'products.description')}</h2>
-          <p class="mt-3 whitespace-pre-line text-[17px] leading-relaxed text-ink-2">{pick(p.body, lang)}</p>
+          <p class="mt-3 whitespace-pre-line text-lg leading-relaxed text-ink-2">{pick(p.body, lang)}</p>
         </section>
         {features.length > 0 && <section class="mt-10">
           <h2 class="text-xl">{t(lang, 'products.features')}</h2>
           <ul class="mt-4 grid gap-3 sm:grid-cols-2">
-            {features.map((f) => <li class="flex gap-3 rounded-card bg-surface p-4 text-[15px] text-ink"><span class="mt-1 h-2 w-2 shrink-0 rounded-full bg-accent"></span>{f}</li>)}
+            {features.map((f) => <li class="flex gap-3 rounded-card bg-surface p-4 text-base text-ink"><span class="mt-1 h-2 w-2 shrink-0 rounded-full bg-accent"></span>{f}</li>)}
           </ul>
         </section>}
         {gallery.length > 0 && <section class="mt-10 grid grid-cols-2 gap-3 md:grid-cols-4">

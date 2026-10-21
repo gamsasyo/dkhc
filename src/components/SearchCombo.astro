@@ -1,20 +1,54 @@
 ---
 import { t, localizePath, type Locale } from '../lib/i18n';
 import { CATEGORIES } from '../lib/schema';
-type Props = { locale: Locale; class?: string };
-const { locale, class: cls = '' } = Astro.props;
+type Props = { locale: Locale; compact?: boolean /* 640px 미만에서 분야 선택 숨김 (헤더) */; class?: string };
+const { locale, compact = false, class: cls = '' } = Astro.props;
+// 분야 고르기: OS 기본 선택창(iOS 휠 등) 대신 직접 그린 목록. JS가 없으면 기본 <select> 가 그대로 보여서 동작은 유지
+const dot: Record<string, string> = { '': 'bg-brand', special: 'bg-[#5b9dff]', medical: 'bg-[#3cc79a]', eco: 'bg-[#9cc94a]' };
+const options = [{ v: '', label: t(locale, 'search.all'), desc: '' },
+  ...CATEGORIES.map((c) => ({ v: c, label: t(locale, `category.${c}`), desc: t(locale, `category.${c}.desc`) }))];
 ---
 <form method="get" action={localizePath(locale, '/products/')} role="search"
-  class={`flex h-12 items-center rounded-pill border border-line bg-white pl-2 pr-1 focus-within:border-accent ${cls}`}>
-  <select name="cat" aria-label={t(locale, 'search.all')}
-    class="h-10 max-w-[11rem] rounded-pill bg-surface px-3 text-sm font-medium text-ink-2 outline-none">
-    <option value="">{t(locale, 'search.all')}</option>
-    {CATEGORIES.map((c) => <option value={c}>{t(locale, `category.${c}`)}</option>)}
-  </select>
+  class={`flex h-12 items-center rounded-pill border border-line bg-white pl-2 pr-1 text-ink focus-within:border-accent ${compact ? 'max-sm:h-11 max-sm:pl-1' : ''} ${cls}`}><!-- text-ink: 네이비 히어로(text-white) 안에서도 입력 글자가 보이게 -->
+  <div class:list={['relative shrink-0', compact && 'max-sm:hidden']} data-select>
+    <select name="cat" aria-label={t(locale, 'search.all')}
+      class="h-10 max-w-[11rem] rounded-pill bg-surface px-3 text-sm font-medium text-ink-2 outline-none">
+      {options.map((o) => <option value={o.v}>{o.label}</option>)}
+    </select>
+    <button type="button" data-select-btn aria-haspopup="listbox" aria-expanded="false" aria-label={t(locale, 'search.all')}
+      class="hidden h-10 max-w-[11rem] items-center gap-2 rounded-pill bg-surface pl-3 pr-2.5 text-sm font-medium text-ink-2 outline-none hover:bg-line/70 focus-visible:ring-2 focus-visible:ring-accent aria-expanded:bg-line/70">
+      <span data-select-label class="truncate">{options[0].label}</span>
+      <svg class="shrink-0 transition-transform duration-200 [[aria-expanded=true]>&]:rotate-180" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+    </button>
+    <ul role="listbox" tabindex="-1" data-select-list aria-label={t(locale, 'search.all')}
+      class="absolute left-0 top-[calc(100%+10px)] z-50 hidden w-[min(20rem,calc(100vw-2rem))] origin-top-left rounded-card border border-line bg-white p-1.5 shadow-[0_18px_40px_-18px_rgb(15_60_140/0.35)] outline-none">
+      {options.map((o) => (
+        <li role="option" data-value={o.v} aria-selected={o.v === '' ? 'true' : 'false'}
+          class="group flex cursor-pointer items-start gap-3 rounded-[10px] px-3 py-2.5 data-[active]:bg-surface">
+          <span class={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${dot[o.v]}`}></span>
+          <span class="min-w-0 flex-1">
+            <span class="block text-sm font-semibold text-ink group-aria-selected:text-brand">{o.label}</span>
+            {o.desc && <span class="block text-xs leading-relaxed text-ink-3">{o.desc}</span>}
+          </span>
+          <svg class="mt-0.5 shrink-0 text-brand opacity-0 group-aria-selected:opacity-100" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg>
+        </li>
+      ))}
+    </ul>
+  </div>
   <input name="q" type="search" placeholder={t(locale, 'search.placeholder')} autocomplete="off"
+    data-ph-full={t(locale, 'search.placeholder')} data-ph-short={compact ? t(locale, 'search.submit') : undefined}
     class="h-10 min-w-0 flex-1 bg-transparent px-3 text-sm outline-none placeholder:text-ink-3" />
   <button type="submit" aria-label={t(locale, 'search.submit')}
     class="grid h-10 w-10 place-items-center rounded-pill text-ink-2 hover:bg-surface hover:text-accent">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
   </button>
 </form>
+<script>
+  import { initSelect } from './islands/select';
+  document.addEventListener('astro:page-load', () => document.querySelectorAll<HTMLElement>('[data-select]').forEach(initSelect));
+  // 좁은 헤더 검색창: 긴 안내문이 잘리니 폰에선 짧게 ("검색")
+  const narrow = matchMedia('(max-width: 639px)');
+  const setPh = () => document.querySelectorAll<HTMLInputElement>('input[data-ph-short]').forEach((i) => (i.placeholder = narrow.matches ? i.dataset.phShort! : i.dataset.phFull!));
+  narrow.addEventListener('change', setPh);
+  document.addEventListener('astro:page-load', setPh);
+</script>

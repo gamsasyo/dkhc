@@ -2,6 +2,7 @@
 import Container from './ui/Container.astro';
 import Button from './ui/Button.astro';
 import SearchCombo from './SearchCombo.astro';
+import Logo from './Logo.astro';
 import { t, localizePath, LOCALES, type Locale } from '../lib/i18n';
 type Props = { locale: Locale; path: string };
 const { locale, path } = Astro.props;
@@ -14,30 +15,30 @@ const isActive = (href: string) => path.startsWith(href);
 const LABEL: Record<Locale, string> = { ko: 'KO', en: 'EN', ja: 'JA' };
 ---
 <header class="sticky top-0 z-40 border-b border-line bg-white/90 backdrop-blur">
-  <Container class="flex h-[72px] items-center gap-4">
-    <a href={localizePath(locale, '/')} class="shrink-0 text-lg font-bold tracking-tight text-brand">DAEKYUNG HICHEM</a>
-    <SearchCombo locale={locale} class="hidden flex-1 md:flex md:max-w-xl" />
-    <nav class="ml-auto hidden items-center gap-6 md:flex" aria-label="main">
+  <Container class="flex h-[72px] items-center gap-2 sm:gap-4">
+    <a href={localizePath(locale, '/')} class="flex shrink-0 items-center text-black [--logo-d:var(--color-brand)]"><Logo variant="header" label={t(locale, 'site.name')} class="h-6 sm:h-7" /></a>
+    <!-- 검색창은 모든 폭에서 로고와 메뉴 버튼 사이 한 줄. 폰에선 분야 선택을 빼고 입력칸만 -->
+    <SearchCombo locale={locale} compact class="min-w-0 max-w-2xl flex-1 xl:max-w-xl" />
+    <nav class="ml-auto hidden items-center gap-6 whitespace-nowrap xl:flex" aria-label="main">
       {nav.map((n) => <a href={localizePath(locale, n.href)}
-        class={`text-[15px] font-medium ${isActive(n.href) ? 'text-accent' : 'text-ink-2 hover:text-accent'}`}>{t(locale, n.key)}</a>)}
+        class={`py-2 text-base font-medium ${isActive(n.href) ? 'text-accent' : 'text-ink-2 hover:text-accent'}`}>{t(locale, n.key)}</a>)}
     </nav>
-    <div class="hidden items-center gap-1 text-xs font-semibold text-ink-3 md:flex" aria-label="language">
-      {LOCALES.map((l, i) => <>{i > 0 && <span>/</span>}<a href={localizePath(l, path)} class={l === locale ? 'text-brand' : 'hover:text-accent'} hreflang={l}>{LABEL[l]}</a></>)}
+    <div class="hidden items-center gap-1 text-xs font-semibold text-ink-3 xl:flex" aria-label="language">
+      {LOCALES.map((l, i) => <>{i > 0 && <span>/</span>}<a href={localizePath(l, path)} class={`px-1 py-2 ${l === locale ? 'text-brand' : 'hover:text-accent'}`} hreflang={l}>{LABEL[l]}</a></>)}
     </div>
-    <Button href={localizePath(locale, '/contact/')} size="sm" class="hidden md:inline-flex">{t(locale, 'nav.contact')}</Button>
-    <button type="button" class="ml-auto grid h-10 w-10 place-items-center rounded-pill md:hidden" aria-label="menu" data-menu-toggle aria-expanded="false">
+    <Button href={localizePath(locale, '/contact/')} size="sm" class="max-xl:hidden">{t(locale, 'nav.contact')}</Button>
+    <button type="button" class="ml-auto grid h-11 w-11 shrink-0 place-items-center rounded-pill xl:hidden" aria-label="menu" data-menu-toggle aria-expanded="false">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
     </button>
   </Container>
-  <div class="hidden border-t border-line bg-white md:hidden" data-menu>
+  <div class="hidden border-t border-line bg-white xl:hidden" data-menu>
     <Container class="space-y-4 py-4">
-      <SearchCombo locale={locale} />
       <nav class="flex flex-col gap-3">
-        {nav.map((n) => <a href={localizePath(locale, n.href)} class="text-base font-medium text-ink">{t(locale, n.key)}</a>)}
-        <a href={localizePath(locale, '/contact/')} class="text-base font-medium text-accent">{t(locale, 'nav.contact')}</a>
+        {nav.map((n) => <a href={localizePath(locale, n.href)} class="py-1.5 text-base font-medium text-ink">{t(locale, n.key)}</a>)}
+        <a href={localizePath(locale, '/contact/')} class="py-1.5 text-base font-medium text-accent">{t(locale, 'nav.contact')}</a>
       </nav>
       <div class="flex gap-3 text-sm font-semibold text-ink-3">
-        {LOCALES.map((l) => <a href={localizePath(l, path)} class={l === locale ? 'text-brand' : ''}>{LABEL[l]}</a>)}
+        {LOCALES.map((l) => <a href={localizePath(l, path)} class={`px-1 py-2 ${l === locale ? 'text-brand' : ''}`}>{LABEL[l]}</a>)}
       </div>
     </Container>
   </div>

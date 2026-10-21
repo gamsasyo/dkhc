@@ -18,7 +18,7 @@ const labels = { results: t(lang, 'products.results'), resultsAll: t(lang, 'prod
   category: Object.fromEntries(CATEGORIES.map((c) => [c, t(lang, `category.${c}`)])) };
 ---
 <Base title={t(lang, 'products.title')} description={t(lang, 'site.tagline')} path="/products/">
-  <PageHero eyebrow={t(lang, 'products.eyebrow')} title={t(lang, 'products.title')} tint="special" />
+  <PageHero eyebrow={t(lang, 'products.eyebrow')} title={t(lang, 'products.title')} />
   <Container class="py-10 md:py-14" data-catalog data-labels={JSON.stringify(labels)}>
     <script type="application/json" id="catalog-data" set:html={JSON.stringify(catalogItems)} />
 
@@ -29,7 +29,7 @@ const labels = { results: t(lang, 'products.results'), resultsAll: t(lang, 'prod
       </label>
     </div>
 
-    <h2 class="text-base font-semibold text-brand">{t(lang, 'products.selectCategory')}</h2>
+    <h2 class="text-lg font-semibold text-brand">{t(lang, 'products.selectCategory')}</h2>
     <div class="mt-3"><CategoryTiles locale={lang} counts={catCounts} /></div>
 
     <div class="mt-8"><SegmentPills locale={lang} counts={segCounts} /></div>

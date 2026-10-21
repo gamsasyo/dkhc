@@ -4,7 +4,7 @@ const { available, allLabel } = Astro.props;
 const letters = [...'ABCDEFGHIJKLMNOPQRSTUVWXYZ', '#'];
 ---
 <div class="flex flex-wrap gap-1 border-b border-line pb-3 text-sm font-semibold" data-alpha-index>
-  <button type="button" data-letter="" aria-pressed="true" class="alpha px-2 py-1 text-accent underline underline-offset-4">{allLabel}</button>
+  <button type="button" data-letter="" aria-pressed="true" class="alpha h-10 min-w-10 px-2 text-accent underline underline-offset-4 md:h-8 md:min-w-0">{allLabel}</button>
   {letters.map((L) => <button type="button" data-letter={L} aria-pressed="false" disabled={!available.has(L)}
-    class="alpha px-2 py-1 text-ink-2 hover:text-accent disabled:text-ink-3/40 disabled:hover:text-ink-3/40">{L}</button>)}
+    class="alpha h-10 min-w-10 px-2 text-ink-2 md:h-8 md:min-w-0 hover:text-accent disabled:text-ink-3/40 disabled:hover:text-ink-3/40">{L}</button>)}
 </div>

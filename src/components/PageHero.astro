@@ -1,14 +1,17 @@
 ---
+// 하위 페이지 상단: 홈 히어로와 같은 네이비 단색 밴드 + 오른쪽에 잘린 심볼 (CI 제안서 B-01)
+// back: 목록으로 돌아가는 링크 (상세 페이지) · transitionName: 목록 카드 제목과 이어지는 페이지 전환 이름
 import Container from './ui/Container.astro';
 import Eyebrow from './ui/Eyebrow.astro';
-type Props = { eyebrow: string; title: string; tint?: 'special' | 'medical' | 'eco' | 'neutral' };
-const { eyebrow, title, tint = 'neutral' } = Astro.props;
-const bg = { special: 'from-tint-special', medical: 'from-tint-medical', eco: 'from-tint-eco', neutral: 'from-surface' }[tint];
+import Logo from './Logo.astro';
+type Props = { eyebrow: string; title: string; back?: { href: string; label: string }; transitionName?: string };
+const { eyebrow, title, back, transitionName } = Astro.props;
 ---
-<section class={`relative overflow-hidden bg-gradient-to-r ${bg} to-white`} data-hero-tint={tint}>
-  <div class="pointer-events-none absolute -right-24 -top-32 h-96 w-96 rounded-full bg-white/60 blur-3xl"></div>
+<section class="relative isolate overflow-hidden bg-brand text-white">
+  <Logo variant="symbol" label="" class="pointer-events-none absolute -right-[4%] top-1/2 -z-10 h-[150%] -translate-y-1/2 text-white opacity-[.07] [--logo-pt:#fff] max-md:hidden" />
   <Container class="relative py-14 md:py-20">
-    <Eyebrow>{eyebrow}</Eyebrow>
-    <h1 class="mt-2 text-4xl md:text-5xl">{title}</h1>
+    {back && <a href={back.href} class="-ml-1 mb-5 inline-block px-1 py-1 text-sm font-medium text-white/60 hover:text-white">‹ {back.label}</a>}
+    <Eyebrow class="text-white/60">{eyebrow}</Eyebrow>
+    <h1 class="mt-2 text-4xl leading-[1.15] text-white md:text-5xl" transition:name={transitionName}>{title}</h1>
   </Container>
 </section>

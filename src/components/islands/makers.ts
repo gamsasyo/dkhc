@@ -12,8 +12,7 @@ export function initMakers(root: HTMLElement) {
   function render() {
     const vis = new Set(filterMakers(items, { cat, letter }).map((m) => m.id));
     items.forEach((m) => m.el.classList.toggle('hidden', !vis.has(m.id)));
-    tiles.forEach((tl) => { const on = tl.dataset.category === cat; tl.setAttribute('aria-pressed', String(on));
-      tl.classList.toggle('border-accent', on); tl.classList.toggle('border-transparent', !on);
+    tiles.forEach((tl) => { const on = tl.dataset.category === cat; tl.setAttribute('aria-pressed', String(on)); // 선택 모양은 aria-pressed 로 CSS가 그림 (CategoryTiles)
       const check = tl.querySelector('[data-check]');
       if (check && on && check.classList.contains('hidden')) popCheck(check);
       check?.classList.toggle('hidden', !on); });

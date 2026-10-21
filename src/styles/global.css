@@ -2,8 +2,8 @@
 
 @theme {
   /* 색: 네이비 1 · 포인트 블루 1 · 회색 5단계 · 분야 틴트 3 */
-  --color-brand: #14255c;
-  --color-brand-deep: #0c1740;
+  --color-brand: #0f3c8c;   /* CI DK Navy */
+  --color-brand-deep: #0a2862;
   --color-accent: #0a8fe0;
   --color-accent-hover: #077ac0;
   --color-ink: #1b1f2a;
@@ -16,6 +16,11 @@
   --color-tint-eco: #f0f6e4;
 
   /* 타이포 */
+  /* 제목 크기는 화면 폭에 따라 연속으로 (360px → 1920px). 고정 단계 대신 clamp — IMCD처럼 창을 늘리고 줄일 때 같이 움직이게 */
+  --text-3xl: clamp(1.625rem, 1.25rem + 1vw, 2.375rem);
+  --text-4xl: clamp(1.875rem, 1.35rem + 1.5vw, 3rem);
+  --text-5xl: clamp(2.25rem, 1.5rem + 2.2vw, 3.75rem);
+  --text-6xl: clamp(2.5rem, 1.5rem + 3vw, 4.75rem);
   --font-sans: "Pretendard Variable", Pretendard, "Noto Sans JP", system-ui, sans-serif;
   --font-jp: "Noto Sans JP", "Pretendard Variable", system-ui, sans-serif;
 
@@ -23,12 +28,12 @@
   --radius-card: 16px;
   --radius-input: 12px;
   --radius-pill: 999px;
-  --shadow-card: 0 8px 24px -12px rgb(20 37 92 / 0.18);
+  --shadow-card: 0 8px 24px -12px rgb(15 60 140 / 0.18);
 
   /* 여백 */
   --spacing-section: 6rem;
   --spacing-section-sm: 4rem;
-  --container-site: 1200px;
+  --container-site: 1800px; /* 본문 폭은 Container 의 좌우 여백(7vw)이 정하고, 이건 아주 넓은 화면의 상한만 */
 }
 
 @layer base {
@@ -36,34 +41,29 @@
   html[lang="ja"] { font-family: var(--font-jp); letter-spacing: 0; }
   body { background: #fff; font-size: 16px; line-height: 1.6; }
   h1, h2, h3, h4 { font-weight: 600; color: var(--color-brand); line-height: 1.25; }
+  /* 한국어는 어절 단위로 줄바꿈 — 창 폭이 바뀌어도 '신/뢰할'처럼 단어가 쪼개지지 않게 */
+  html[lang="ko"] :is(h1, h2, h3, h4, p, dd, dt, li) { word-break: keep-all; overflow-wrap: anywhere; }
   a { transition: color .2s, background-color .2s, border-color .2s; }
   :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
 }
 
 /* ── 모션 ─────────────────────────────────────────────── */
-/* 히어로 블롭: 2–4% 드리프트(18–26s, 왕복) + 느린 투명도 맥동(60–90s) */
-@keyframes blob-drift-a { to { transform: translate(3%, -2%) scale(1.03); } }
-@keyframes blob-drift-b { to { transform: translate(-2%, 3%) scale(1.04); } }
-@keyframes blob-drift-c { to { transform: translate(-3%, -2%) scale(1.02); } }
-@keyframes blob-drift-d { to { transform: translate(2%, 2%) scale(1.03); } }
-@keyframes blob-pulse { 50% { opacity: .72; } }
-.hero-blob { animation: var(--blob-drift) var(--blob-dur) ease-in-out infinite alternate, blob-pulse var(--blob-pulse, 75s) ease-in-out infinite; }
-.hero-blob-1 { --blob-drift: blob-drift-a; --blob-dur: 22s; --blob-pulse: 70s; }
-.hero-blob-2 { --blob-drift: blob-drift-b; --blob-dur: 26s; --blob-pulse: 85s; }
-.hero-blob-3 { --blob-drift: blob-drift-c; --blob-dur: 18s; --blob-pulse: 60s; }
-.hero-blob-4 { --blob-drift: blob-drift-d; --blob-dur: 24s; --blob-pulse: 90s; }
-
 /* 스크롤 리빌 초기 상태 — JS 가 <html class="reveal-init"> 를 붙였을 때만. JS 없으면 전부 보인다. */
 @media (prefers-reduced-motion: no-preference) {
   html.reveal-init :is([data-reveal], [data-reveal-group] > *):not(.revealed) { opacity: 0; }
 }
+
+/* 분야 타일: 하나를 고르면 나머지는 흐리게 (고른 타일은 aria-pressed 로 네이비 채움 — CategoryTiles) */
+/* opacity 는 스크롤 리빌(motion)이 인라인으로 덮어써서 filter 로 */
+[data-category-tiles] > * { transition: filter .2s; }
+[data-category-tiles]:has([aria-pressed="true"]) > [aria-pressed="false"] { filter: grayscale(.8) opacity(.55); }
+[data-category-tiles]:has([aria-pressed="true"]) > [aria-pressed="false"]:hover { filter: none; }
 
 /* "자세히 보기 ›" 화살표 */
 .chev { display: inline-block; transition: transform .2s; }
 a:hover .chev { transform: translateX(4px); }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-blob { animation: none; }
   .chev { transition: none; }
   a:hover .chev { transform: none; }
 }

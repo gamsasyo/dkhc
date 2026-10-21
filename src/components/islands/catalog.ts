@@ -24,8 +24,7 @@ export function initCatalog(root: HTMLElement) {
     // 타일
     tiles.forEach((tl) => {
       const on = tl.dataset.category === q.cat;
-      tl.setAttribute('aria-pressed', String(on));
-      tl.classList.toggle('border-accent', on); tl.classList.toggle('border-transparent', !on);
+      tl.setAttribute('aria-pressed', String(on)); // 선택 모양은 aria-pressed 로 CSS가 그림 (CategoryTiles)
       const check = tl.querySelector('[data-check]');
       if (check && on && check.classList.contains('hidden')) popCheck(check);
       check?.classList.toggle('hidden', !on);
@@ -58,11 +57,20 @@ export function initCatalog(root: HTMLElement) {
     if (push) history.replaceState(history.state, '', location.pathname + serializeQuery(q)); // history.state 유지 — ClientRouter 가 뒤로가기 판단에 쓴다
   }
 
+  // 고른 결과가 화면 밖(아래)에 있으면 결과 줄까지 내려주고, 결과 문구를 한 번 반짝 — 눌렀는데 아무 일 없는 것처럼 보이지 않게
+  function showResult() {
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (result.getBoundingClientRect().top > innerHeight * .75)
+      result.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+    if (!reduce) result.animate([{ color: 'var(--color-accent)', transform: 'translateY(-2px)' }, { color: '', transform: 'none' }], { duration: 700, easing: 'ease-out' });
+  }
+
   tiles.forEach((tl) => tl.addEventListener('click', (e) => {
     e.preventDefault();
     const c = tl.dataset.category as Category;
     q = { ...q, cat: q.cat === c ? undefined : c, seg: undefined };
     render();
+    showResult();
   }));
   rows.forEach((row) => row.addEventListener('click', (e) => {
     const pill = (e.target as HTMLElement).closest<HTMLElement>('.pill'); if (!pill) return;
